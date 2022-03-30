@@ -27,7 +27,7 @@ mainfont: Times New Roman
 
 #did this work???
 
-
+#I think I have access now, but might need Taro to add me so I can commit changes
 
 
 
@@ -44,6 +44,11 @@ mainfont: Times New Roman
 
 
 # Rationale and Research Questions
+
+helpful links:
+1. https://restorationsystems.com/projects/pancho-stream-wetland-nutrient-mitigation-bank/
+2. https://www.landcan.org/local-resources/Brice-Creek-Wetland-Mitigation-Bank/41541/
+3. https://restorationsystems.com/projects/cripple-creek-stream-wetland-mitigation-bank/#tab-id-2
 
 
 
