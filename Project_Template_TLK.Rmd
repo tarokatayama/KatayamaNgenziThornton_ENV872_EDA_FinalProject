@@ -21,6 +21,15 @@ mainfont: Times New Roman
 \listoffigures 
 \newpage
 
+
+Initial steps
+* get data
+* Wrangle data
+* graph data to see what we're working with
+* try a seasonal Mann-kendall test
+* 
+
+
 ```{r setup, include=FALSE}
 
 
