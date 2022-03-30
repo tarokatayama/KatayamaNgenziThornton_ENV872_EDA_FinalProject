@@ -27,7 +27,8 @@ Initial steps
 * Wrangle data
 * graph data to see what we're working with
 * try a seasonal Mann-kendall test
-* 
+* divide decades and see if there's a statistical significant difference 
+* Optional: map of three schools in NC
 
 
 ```{r setup, include=FALSE}
