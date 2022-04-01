@@ -5,9 +5,9 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Insert title of project here"
+title: "Precipitation Change in Durham"
 subtitle: "Web address for GitHub repository"
-author: "Name"
+author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 fontsize: 12pt
 mainfont: Times New Roman
 
@@ -34,23 +34,24 @@ Initial steps
 
 ```{r setup, include=FALSE}
 
-
-
-#did this work???
-
-#I think I have access now, but might need Taro to add me so I can commit changes
-
-
-
-
 # Set your working directory
-
+getwd()
 # Load your packages
-
-# Set your ggplot theme
+library(tidyverse)
+library(lubridate)
+library(mapview)
 
 # Load your datasets
+Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv")
+view(Beaufort_RAW)
 
+Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d")
+
+# Set your ggplot theme
+Theme <- theme_classic(base_size = 7) +
+  theme(axis.text = element_text(color = "black"),
+        legend.position = "right")
+theme_set(Theme)
 ```
 
 
