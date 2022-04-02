@@ -135,6 +135,9 @@ helpful links:
 \newpage
 
 # Dataset Information
+```{r}
+
+```
 
 ** Significant precipitation events are considered "1 year events" using NOAA. 
 
@@ -149,6 +152,12 @@ helpful links:
 
 # Analysis
 
+```{r}
+#plot data to see possible trend
+ggplot(Beaufort_RAW, aes(x=Date, y=Area.Weighted.Mean.Precipitation..mm.per.day.))+
+  geom_point()+
+  geom_smooth()
+```
 
 
 ## Question 1: Is there is an increase in precipitation over time at Beaufort, NC?
