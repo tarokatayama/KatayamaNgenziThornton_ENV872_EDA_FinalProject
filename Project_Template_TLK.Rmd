@@ -138,6 +138,11 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 
 ```
 
+```{r seasonal mann-kendall}
+
+
+```
+
 # Rationale and Research Questions
 We will be looking at the trends of precipitation over time for Beaufort, NC. 
 helpful links:
