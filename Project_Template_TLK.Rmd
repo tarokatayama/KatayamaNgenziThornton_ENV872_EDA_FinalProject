@@ -151,7 +151,7 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 
 ```{r mann-kendall for decades}
 library(Kendall)
-#Note: probably won't include this because its seasonal data
+#Note: probably won't include this because the data is seasonal data
 MannKendall(Beaufort_early$PrecipInches)
 MannKendall(Beaufort_early$sigPrecip)
 #neither are significant
