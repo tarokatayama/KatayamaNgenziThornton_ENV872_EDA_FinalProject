@@ -128,6 +128,16 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_smooth(method = lm)
 ```
 
+
+```{r t-test}
+t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
+#not significant
+
+t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
+#significant!
+
+```
+
 # Rationale and Research Questions
 We will be looking at the trends of precipitation over time for Beaufort, NC. 
 helpful links:
