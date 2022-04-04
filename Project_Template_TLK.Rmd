@@ -135,6 +135,10 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_smooth(method = lm)
 ```
 
+```{r t-test overall}
+t.test(Beaufort_Clean$meanmonthlyprecip)
+#significant
+```
 
 ```{r t-test for decades}
 t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
