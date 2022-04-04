@@ -139,8 +139,15 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 ```
 
 ```{r seasonal mann-kendall}
+library(Kendall)
+MannKendall(Beaufort_early$PrecipInches)
+MannKendall(Beaufort_early$sigPrecip)
+#neither are significant
 
-
+MannKendall(Beaufort_Late$PrecipInches)
+#significant
+MannKendall(Beaufort_Late$sigPrecip)
+#not significant
 ```
 
 # Rationale and Research Questions
