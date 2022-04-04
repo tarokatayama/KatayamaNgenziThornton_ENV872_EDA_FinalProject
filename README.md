@@ -7,3 +7,7 @@ Analysis plan:
 2) increase comparing decades<- t-test comparing decades, and seeing if there is significant difference between time periods.
 3) we can see if there is an increase in number of 'significant' storms recently.
 3) Mapview of spatial location of our project
+
+Mon 04/04/22
+
+Add Recurrence Interval Lambert will try this 
