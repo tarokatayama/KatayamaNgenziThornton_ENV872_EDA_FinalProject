@@ -64,7 +64,7 @@ theme_set(Theme)
 
 
 Wrangle Data
-```{r}
+```{r clean}
 #Created monthly mean precipitation + total monthly precipitation dataset for Beaufort.
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
@@ -72,6 +72,9 @@ Beaufort_Clean<- Beaufort_RAW%>%
              sumMonthlyPrecip= sum(Area.Weighted.Mean.Precipitation..mm.per.day.))%>%
   mutate(Date= my(paste0(month,"-", year)))
 
+```
+
+```{r early}
 #10 year time frame, precipitation in inches (1997-01-01 to 2006-12-31) +significant 24hr precipitation events in magnitude+ # of significant precipitation events
 Beaufort_early<- Beaufort_RAW%>%
   mutate(PrecipInches= Area.Weighted.Mean.Precipitation..mm.per.day.*0.0394)%>%
@@ -94,6 +97,9 @@ ggplot(Beaufort_early, aes(x=Date , y=sigPrecip))+
 EarlyTable<- kable(Beaufort_early_summary, caption = "Significant Events Over Year")
 EarlyTable
 
+```
+
+```{r late}
 #10 year time frame, precipitation in inches (2007-01-01 to 2016-12-30) +significant 24hr precipitation events in magnitude + # of significant precipitation events
 Beaufort_Late<- Beaufort_RAW%>%
   mutate(PrecipInches= Area.Weighted.Mean.Precipitation..mm.per.day.*0.0394)%>%
@@ -109,14 +115,15 @@ Beaufort_late_summary<- Beaufort_Late%>%
   group_by(year)%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
-
 #check results
 ggplot(Beaufort_Late, aes(x=Date , y=sigPrecip))+
   geom_point()
 
 LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year")
 LateTable
+```
 
+```{r initial plots}
 #plot mean monthly precip data to see rough trend
 ggplot(Beaufort_Clean, aes(x=Date, y = meanmonthlyprecip))+
   geom_point()+
@@ -151,13 +158,11 @@ MannKendall(Beaufort_Late$sigPrecip)
 ```
 
 # Rationale and Research Questions
+
+Hypothesis: There is a significant increase in significant storm events in Beaufort, NC
+
+
 We will be looking at the trends of precipitation over time for Beaufort, NC. 
-helpful links:
-1. https://restorationsystems.com/projects/pancho-stream-wetland-nutrient-mitigation-bank/
-2. https://www.landcan.org/local-resources/Brice-Creek-Wetland-Mitigation-Bank/41541/
-3. https://restorationsystems.com/projects/cripple-creek-stream-wetland-mitigation-bank/#tab-id-2
-
-
 
 \newpage
 
