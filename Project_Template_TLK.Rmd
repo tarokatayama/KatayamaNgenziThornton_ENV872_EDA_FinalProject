@@ -136,7 +136,7 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
 ```
 
 
-```{r t-test}
+```{r t-test for decades}
 t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
 #not significant
 
@@ -145,8 +145,9 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 
 ```
 
-```{r seasonal mann-kendall}
+```{r mann-kendall for decades}
 library(Kendall)
+#Note: probably won't include this because its seasonal data
 MannKendall(Beaufort_early$PrecipInches)
 MannKendall(Beaufort_early$sigPrecip)
 #neither are significant
@@ -156,6 +157,26 @@ MannKendall(Beaufort_Late$PrecipInches)
 MannKendall(Beaufort_Late$sigPrecip)
 #not significant
 ```
+
+```{r seasonal mann-kendall for decades }
+Late_full_ts <- ts(Beaufort_Late$PrecipInches, start= c(1,2007), frequency = 365)
+SeasonalMannKendall(Late_full_ts)
+#significant
+
+Late_sig_ts <- ts(Beaufort_Late$sigPrecip, start= c(1,2007), frequency = 365)
+SeasonalMannKendall(Late_sig_ts)
+#not significant
+
+Early_full_ts <- ts(Beaufort_early$PrecipInches, start = c(1,1997), frequency = 365)
+SeasonalMannKendall(Early_full_ts)
+#not significant
+
+Early_sig_ts <- ts(Beaufort_early$sigPrecip, start = c(1,1997), frequency = 365)
+SeasonalMannKendall(Early_sig_ts)
+#not significant 
+
+```
+
 
 # Rationale and Research Questions
 
