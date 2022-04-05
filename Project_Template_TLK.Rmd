@@ -194,6 +194,9 @@ pacf(Late_sig_ts)
 acf(Early_full_ts)
 pacf(Early_full_ts)
 
+acf(Early_sig_ts)
+pacf(Early_sig_ts)
+
 
 ```
 
