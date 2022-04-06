@@ -53,6 +53,8 @@ view(Beaufort_RAW)
 
 names(Beaufort_RAW)[1] <- "Date"
 
+names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
+
 Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
 
 # Set your ggplot theme
@@ -68,8 +70,8 @@ Wrangle Data
 #Created monthly mean precipitation + total monthly precipitation dataset for Beaufort.
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
-   summarise(meanmonthlyprecip= mean(Area.Weighted.Mean.Precipitation..mm.per.day.),
-             sumMonthlyPrecip= sum(Area.Weighted.Mean.Precipitation..mm.per.day.))%>%
+   summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
+             sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
 
 # Summary infos of the monthly mean precip. of beaufort 
@@ -80,7 +82,7 @@ summary(Beaufort_Clean)
 ```{r early}
 #10 year time frame, precipitation in inches (1997-01-01 to 2006-12-31) +significant 24hr precipitation events in magnitude+ # of significant precipitation events
 Beaufort_early<- Beaufort_RAW%>%
-  mutate(PrecipInches= Area.Weighted.Mean.Precipitation..mm.per.day.*0.0394)%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
          NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
@@ -109,7 +111,7 @@ EarlyTable
 ```{r late}
 #10 year time frame, precipitation in inches (2007-01-01 to 2016-12-30) +significant 24hr precipitation events in magnitude + # of significant precipitation events
 Beaufort_Late<- Beaufort_RAW%>%
-  mutate(PrecipInches= Area.Weighted.Mean.Precipitation..mm.per.day.*0.0394)%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date > "2006-12-31")%>%
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
          NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
