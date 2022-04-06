@@ -200,7 +200,7 @@ SeasonalMannKendall(Early_sig_ts)
 Let's inspect the ACF and PACF plots. Notice the ACF plot has repeating positive and negative components (indicating seasonality), whereas the PACF decays over time without a clear seasonal structure.
 ```{r}
 
-acf(Late_full_ts)  
+acf(Late_full_ts) 
 pacf(Late_full_ts) 
 
 acf(Late_sig_ts)
