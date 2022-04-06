@@ -1,28 +1,52 @@
 Presentation
 ========================================================
+<<<<<<< HEAD
 author: Karen, Taro, Lambert  
+=======
+author: Karen
+>>>>>>> 4406271aed29ce39eae087cc9f7ae9a6746fd9e3
 date: 
 autosize: true
 
-First Slide
+Hypothesis and Question
 ========================================================
 
 For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
 
-- Bullet 1
+- Hi
 - Bullet 2
 - Bullet 3
 
-Slide With Code
+Data
 ========================================================
 
 ```{r}
 summary(cars)
 ```
 
-Slide With Plot
+Data Wrangling 
 ========================================================
 
 ```{r, echo=FALSE}
 plot(cars)
 ```
+
+Analysis of Data
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Results
+========================================================
+- Hi
+- Bullet 2
+- Bullet 3
+
+Summary
+========================================================
+- Hi
+- Bullet 2
+- Bullet 3
+
