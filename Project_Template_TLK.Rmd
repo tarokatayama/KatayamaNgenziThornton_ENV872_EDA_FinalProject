@@ -53,6 +53,7 @@ view(Beaufort_RAW)
 
 names(Beaufort_RAW)[1] <- "Date"
 
+
 Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
 
 # Set your ggplot theme
@@ -60,6 +61,10 @@ Theme <- theme_classic(base_size = 7) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "right")
 theme_set(Theme)
+
+ggplot(Beaufort_RAW, aes(x=Date, y=Area.Weighted.Mean.Precipitation..mm.per.day.))+
+  geom_line()+
+  ylim(c(0,125))
 ```
 
 ```{r Map of Beaufort}
@@ -165,6 +170,8 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
 ```{r t-test Overall& Seasonal Mann-Kendall Ovearall}
 t.test(Beaufort_Clean$meanmonthlyprecip)
 #significant
+
+Beaufort_TS<- ts(Beaufort_RAW$Area.Weighted.Mean.Precipitation..mm.per.day., start = c())
 ```
 
 ```{r t-test for decades}
