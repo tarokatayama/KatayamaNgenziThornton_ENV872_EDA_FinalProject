@@ -72,6 +72,9 @@ Beaufort_Clean<- Beaufort_RAW%>%
              sumMonthlyPrecip= sum(Area.Weighted.Mean.Precipitation..mm.per.day.))%>%
   mutate(Date= my(paste0(month,"-", year)))
 
+# Summary infos of the monthly mean precip. of beaufort 
+summary(Beaufort_Clean)
+
 ```
 
 ```{r early}
@@ -85,6 +88,9 @@ Beaufort_early<- Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
 
+#summary of Early precip 
+summary(Beaufort_early)
+
 #Summary of number of sig events per year
 Beaufort_early_summary<- Beaufort_early%>%
   group_by(year)%>%
@@ -93,6 +99,7 @@ Beaufort_early_summary<- Beaufort_early%>%
 #check results 
 ggplot(Beaufort_early, aes(x=Date , y=sigPrecip))+
   geom_point()
+
 
 EarlyTable<- kable(Beaufort_early_summary, caption = "Significant Events Over Year")
 EarlyTable
@@ -110,6 +117,11 @@ Beaufort_Late<- Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
 
+#Summary of Late precip 
+
+summary(Beaufort_Late)
+
+
 #Summary of number of sig events per year (Late)
 Beaufort_late_summary<- Beaufort_Late%>%
   group_by(year)%>%
@@ -121,18 +133,21 @@ ggplot(Beaufort_Late, aes(x=Date , y=sigPrecip))+
 
 LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year")
 LateTable
+
+
 ```
 
 ```{r initial plots}
 #plot mean monthly precip data to see rough trend
-ggplot(Beaufort_Clean, aes(x=Date, y = meanmonthlyprecip))+
-  geom_point()+
+
+
   geom_smooth(method = lm)
 
 #plot total monthly precip data to see rough trend
 ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_point()+
-  geom_smooth(method = lm)
+  geom_smooth(method = lm) 
+  
 ```
 
 ```{r t-test overall}
