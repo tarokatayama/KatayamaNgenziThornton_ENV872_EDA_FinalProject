@@ -81,20 +81,23 @@ Beaufort_early<- Beaufort_RAW%>%
 
 Analysis of Data
 ========================================================
-
+- t-test for overall precipitation (mean monthly precip)
+- t-test to compare precip by decade
+- t-test to compare 1-year precip events by decade
 ```{r}
+
 
 ```
 
 Results
 ========================================================
-- Hi
-- Bullet 2
-- Bullet 3
+- Put plots
+- put significance
 
 Summary
 ========================================================
-- Hi
-- Bullet 2
-- Bullet 3
+
+Large storm events = bad!
+
+Climate Change = bad!
 

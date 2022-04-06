@@ -1,7 +1,16 @@
 Presentation
 ========================================================
+<<<<<<< HEAD
 author: Taro Katayama, Karen Thornton, Lambert Ngenzi
 date: 04/11/22
+=======
+<<<<<<< HEAD
+author: Karen, Taro, Lambert  
+=======
+author: Karen
+>>>>>>> 4406271aed29ce39eae087cc9f7ae9a6746fd9e3
+date: 
+>>>>>>> 50701476059c13218d89450c53522af4ceb5e53c
 autosize: true
 
 Map of Beaufort
@@ -72,18 +81,20 @@ Beaufort_early<- Beaufort_RAW%>%
 
 Analysis of Data
 ========================================================
-
+- t-test for overall precipitation (mean monthly precip)
+- t-test to compare precip by decade
+- t-test to compare 1-year precip events by decade
 
 
 Results
 ========================================================
-- Hi
-- Bullet 2
-- Bullet 3
+- Put plots
+- put significance
 
 Summary
 ========================================================
-- Hi
-- Bullet 2
-- Bullet 3
+
+Large storm events = bad!
+
+Climate Change = bad!
 
