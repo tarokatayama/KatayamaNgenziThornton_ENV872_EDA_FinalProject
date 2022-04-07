@@ -147,13 +147,22 @@ sample estimates:
 0.005537589 0.022171945 
 ```
 
-Results
+Results: Overall
 ========================================================
 - Significant Increase!
+<img src="Presentation-figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
+
+Results: Overall
+========================================================
+- No Significant Increase :(
 
 
+<img src="Presentation-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
-![plot of chunk unnamed-chunk-14](Presentation-figure/unnamed-chunk-14-1.png)
+Results: By Decade
+========================================================
+- Significant Increase!
+<img src="Presentation-figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
 
 
 Summary

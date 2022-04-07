@@ -65,6 +65,12 @@ Theme <- theme_classic(base_size = 7) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "right")
 theme_set(Theme)
+
+#visualize raw data
+ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
+  geom_point()+
+  geom_smooth()+
+  labs(y= "Mean Precipitation (mm)", x= "Date")
 ```
 
 ```{r Map of Beaufort}
@@ -116,6 +122,11 @@ Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   labs(y="1-year storm events", x= "Date")
 Plot_early_sig
+
+Plot_early_overall <- ggplot(Beaufort_early, aes(x=Date , y=PrecipInches))+
+  geom_point()+
+  labs(y="Precipitation (inches)", x= "Date")
+Plot_early_overall
 ```
 
 ```{r late}
@@ -148,6 +159,12 @@ Beaufort_late_summary<- Beaufort_Late%>%
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   labs(y="1-year storm events", x= "Date")
+Plot_late_sig
+
+Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
+  geom_point()+
+  labs(y="Precipitation (inches)", x= "Date")
+Plot_late_overall
 
 #Created table of number of significant events per year.
 LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year")

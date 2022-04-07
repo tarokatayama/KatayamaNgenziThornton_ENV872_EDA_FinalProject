@@ -167,9 +167,19 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 #significant
 ```
 
-Results
+Results: Overall
 ========================================================
 - Significant Increase!
+```{r echo=FALSE, fig.align= "center"}
+ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
+  geom_point()+
+  geom_smooth()+
+  labs(y= "Mean Precipitation (mm)", x= "Date")
+```
+
+Results: Overall
+========================================================
+- No Significant Increase :(
 ```{r include=FALSE}
 Beaufort_earlyNo0Precip<-Beaufort_RAW%>%
   mutate(PrecipInches=Mean_Precip_mm*0.0394)%>%
@@ -184,6 +194,10 @@ Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   labs(y="1-year storm events", x= "Date")
 
+Plot_early_overall <- ggplot(Beaufort_early, aes(x=Date , y=PrecipInches))+
+  geom_point()+
+  labs(y="Precipitation (inches)", x= "Date")
+
 Beaufort_LateNo0Precip<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date > "2006-12-31")%>%
@@ -196,10 +210,20 @@ Beaufort_LateNo0Precip<- Beaufort_RAW%>%
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   labs(y="1-year storm events", x= "Date")
+
+Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
+  geom_point()+
+  labs(y="Precipitation (inches)", x= "Date")
 ```
 
+```{r echo=FALSE, fig.align= "center"}
+grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
+```
 
-```{r echo=FALSE}
+Results: By Decade
+========================================================
+- Significant Increase!
+```{r echo=FALSE, fig.align= "center"}
 require(gridExtra)
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
