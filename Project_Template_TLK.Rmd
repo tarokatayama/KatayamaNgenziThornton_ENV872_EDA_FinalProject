@@ -45,6 +45,7 @@ library(mapview)
 library(knitr)
 library(Kendall)
 library(zoo)
+require(gridExtra)
 options(scipen = 4) # limit number of digits 
 
 # Load your datasets
@@ -111,8 +112,10 @@ EarlyTable<- kable(Beaufort_early_summary, caption = "Significant Events Over Ye
 EarlyTable
 
 #Created figure with # and magnitude of significant events per year.
-ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
-  geom_point()
+Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
+  geom_point()+
+  labs(y="1-year storm events", x= "Date")
+Plot_early_sig
 ```
 
 ```{r late}
@@ -142,8 +145,9 @@ Beaufort_late_summary<- Beaufort_Late%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
 #Created figure with # and magnitude of significant events per year.
-ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
-  geom_point()
+Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
+  geom_point()+
+  labs(y="1-year storm events", x= "Date")
 
 #Created table of number of significant events per year.
 LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year")
@@ -151,6 +155,11 @@ LateTable
 
 
 ```
+
+```{r combined one year storms}
+grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
+```
+
 
 ```{r initial plots}
 #plot precip over years to see general trend. Warning: Plots zoomed in to show trend more clearly, some outliers are not included.

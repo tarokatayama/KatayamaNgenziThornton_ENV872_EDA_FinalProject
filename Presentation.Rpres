@@ -1,16 +1,7 @@
 Presentation
 ========================================================
-<<<<<<< HEAD
 author: Taro Katayama, Karen Thornton, Lambert Ngenzi
 date: 04/11/22
-=======
-<<<<<<< HEAD
-author: Karen, Taro, Lambert  
-=======
-author: Karen
->>>>>>> 4406271aed29ce39eae087cc9f7ae9a6746fd9e3
-date: 
->>>>>>> 50701476059c13218d89450c53522af4ceb5e53c
 autosize: true
 
 Map of Beaufort
@@ -52,9 +43,13 @@ library(dplyr)
 library(lubridate)
 library(mapview)
 library(knitr)
+library(Kendall)
+library(zoo)
+require(gridExtra)
+options(scipen = 4) # limit number of digits 
 ```
 - Grouped by month and year
-- Got mean and sum of precipitation 
+- Mean and sum of precipitation attained
 ```{r}
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
@@ -79,20 +74,136 @@ Beaufort_early<- Beaufort_RAW%>%
   drop_na()
 ```
 
-Analysis of Data
+Analysis of Data: Overall Precip
 ========================================================
-- t-test for overall precipitation (mean monthly precip)
+- t-test using mean monthly precip
+- Seasonal Mann Kendall (to look at trend without seasonality)
+```{r include=FALSE}
+names(Beaufort_RAW)[1] <- "Date"
+names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
+Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
+Beaufort_RAW_2<-Beaufort_RAW
+
+#Used linear interpolation to fill missing data for precipitation data.
+Beaufort_RAW_2$Mean_Precip_mm<-
+  na.approx(Beaufort_RAW_2$Mean_Precip_mm)
+
+#Created a time series analysis of the precipitation data at Beaufort.
+firstday<- day(first(Beaufort_RAW_2$Date))
+firstmonth<- month(first(Beaufort_RAW_2$Date))
+firstyear<- year(first(Beaufort_RAW_2$Date))
+
+
+Beaufort_TS<- ts(Beaufort_RAW_2$Mean_Precip_mm, 
+                 start = c(firstyear, firstmonth, firstday),
+                 frequency = 365)
+
+#Decomposed the time series to see components.
+Beaufort_decompose<- stl(Beaufort_TS, s.window = "periodic")
+```
+
+
+```{r echo=FALSE}
+t.test(Beaufort_RAW$Mean_Precip_mm)
+#significant
+
+#plot the decomosed
+plot(Beaufort_decompose)
+
+Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
+Beaufort.trend
+#significant
+
+```
+Analysis of Data: Overall Precip
+========================================================
+- t-test using mean monthly precip
+- Seasonal Mann Kendall (to look at trend without seasonality)
+```{r echo=FALSE, fig.align= "center"}
+#plot the decomosed
+#plot(Beaufort_decompose)
+
+Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
+Beaufort.trend
+#significant
+```
+
+
+Analysis of Data: By Decades
+========================================================
 - t-test to compare precip by decade
 - t-test to compare 1-year precip events by decade
-```{r}
+```{r include=FALSE}
+Beaufort_Late<- Beaufort_RAW%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
+  filter(Date > "2006-12-31")%>%
+  mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
+         NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
+  select(Date, year, month, 
+         day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
+  drop_na()
+
+Beaufort_early<- Beaufort_RAW%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
+  filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
+  mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
+         NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
+  select(Date , year, month, 
+         day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
+  drop_na()
+```
 
 
+```{r echo=FALSE}
+t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
+#not significant
+```
+Analysis of Data: By Decades
+========================================================
+- t-test to compare precip by decade
+- t-test to compare 1-year precip events by decade
+```{r echo=FALSE}
+t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
+#significant
 ```
 
 Results
 ========================================================
-- Put plots
-- put significance
+- Significant Increase!
+```{r include=FALSE}
+Beaufort_earlyNo0Precip<-Beaufort_RAW%>%
+  mutate(PrecipInches=Mean_Precip_mm*0.0394)%>%
+  filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
+  mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,NA),
+         NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
+  select(Date , year, month, 
+         day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
+  drop_na()
+
+Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
+  geom_point()+
+  labs(y="1-year storm events", x= "Date")
+
+Beaufort_LateNo0Precip<- Beaufort_RAW%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
+  filter(Date > "2006-12-31")%>%
+  mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,NA),
+         NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
+  select(Date, year, month, 
+         day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
+  drop_na()
+
+Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
+  geom_point()+
+  labs(y="1-year storm events", x= "Date")
+```
+
+
+```{r echo=FALSE}
+require(gridExtra)
+grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
+```
+
 
 Summary
 ========================================================
