@@ -1,4 +1,4 @@
-Presentation
+Climate Change effects on large storm events in Beaufort, NC
 ========================================================
 author: Taro Katayama, Karen Thornton, Lambert Ngenzi
 date: 04/11/22
@@ -31,11 +31,8 @@ Data
 See column headers below
 
 ```
-[1] "Date"                                         
-[2] "Area.Weighted.Mean.Precipitation..mm.per.day."
-[3] "year"                                         
-[4] "month"                                        
-[5] "day_of_month"                                 
+[1] "Date"           "Mean_Precip_mm" "year"           "month"         
+[5] "day_of_month"  
 ```
 
 Data Wrangling 
@@ -48,8 +45,8 @@ Data Wrangling
 ```r
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
-   summarise(meanmonthlyprecip= mean(Area.Weighted.Mean.Precipitation..mm.per.day.),
-             sumMonthlyPrecip= sum(Area.Weighted.Mean.Precipitation..mm.per.day.))%>%
+   summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
+             sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
 ```
 
@@ -61,7 +58,7 @@ Data Wrangling: Early decade
 
 ```r
 Beaufort_early<- Beaufort_RAW%>%
-  mutate(PrecipInches= Area.Weighted.Mean.Precipitation..mm.per.day.*0.0394)%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
          NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
@@ -92,11 +89,6 @@ mean of x
  4.140096 
 ```
 
-![plot of chunk unnamed-chunk-8](Presentation-figure/unnamed-chunk-8-1.png)
-
-```
-tau = 0.0189, 2-sided pvalue =0.0056612
-```
 Analysis of Data: Overall Precip
 ========================================================
 - t-test using mean monthly precip
@@ -163,7 +155,6 @@ Results: By Decade
 ========================================================
 - Significant Increase!
 <img src="Presentation-figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
-
 
 Summary
 ========================================================

@@ -1,4 +1,4 @@
-Presentation
+Climate Change effects on large storm events in Beaufort, NC
 ========================================================
 author: Taro Katayama, Karen Thornton, Lambert Ngenzi
 date: 04/11/22
@@ -26,8 +26,12 @@ Data
 - Data from DAYMET, attained from Hydrology class 
 - Historical precipitation data from Beaufort, NC
 
-```{r, echo=FALSE}
+```{r include=FALSE}
 Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
+
+names(Beaufort_RAW)[1] <- "Date"
+names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
+Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
 ```
 See column headers below
 ```{r echo=FALSE}
@@ -45,7 +49,7 @@ library(mapview)
 library(knitr)
 library(Kendall)
 library(zoo)
-require(gridExtra)
+library(gridExtra)
 options(scipen = 4) # limit number of digits 
 ```
 - Grouped by month and year
@@ -53,8 +57,8 @@ options(scipen = 4) # limit number of digits
 ```{r}
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
-   summarise(meanmonthlyprecip= mean(Area.Weighted.Mean.Precipitation..mm.per.day.),
-             sumMonthlyPrecip= sum(Area.Weighted.Mean.Precipitation..mm.per.day.))%>%
+   summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
+             sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
 ```
 
@@ -65,7 +69,7 @@ Data Wrangling: Early decade
 - Created column for "1-year precipitation events" (Threshold = 3.66 inches per day)
 ```{r}
 Beaufort_early<- Beaufort_RAW%>%
-  mutate(PrecipInches= Area.Weighted.Mean.Precipitation..mm.per.day.*0.0394)%>%
+  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
          NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
@@ -79,9 +83,6 @@ Analysis of Data: Overall Precip
 - t-test using mean monthly precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
 ```{r include=FALSE}
-names(Beaufort_RAW)[1] <- "Date"
-names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
-Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
 Beaufort_RAW_2<-Beaufort_RAW
 
 #Used linear interpolation to fill missing data for precipitation data.
@@ -106,15 +107,8 @@ Beaufort_decompose<- stl(Beaufort_TS, s.window = "periodic")
 ```{r echo=FALSE}
 t.test(Beaufort_RAW$Mean_Precip_mm)
 #significant
-
-#plot the decomosed
-plot(Beaufort_decompose)
-
-Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
-Beaufort.trend
-#significant
-
 ```
+
 Analysis of Data: Overall Precip
 ========================================================
 - t-test using mean monthly precip
@@ -143,14 +137,6 @@ Beaufort_Late<- Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
 
-Beaufort_early<- Beaufort_RAW%>%
-  mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
-  filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
-  mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
-         NumSigPrecip= ifelse(PrecipInches>3.66, 1,0))%>%
-  select(Date , year, month, 
-         day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
-  drop_na()
 ```
 
 
@@ -227,7 +213,6 @@ Results: By Decade
 require(gridExtra)
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
-
 
 Summary
 ========================================================
