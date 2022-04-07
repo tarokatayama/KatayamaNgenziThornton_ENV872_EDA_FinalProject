@@ -157,13 +157,14 @@ Results: Overall
 ========================================================
 - Significant Increase!
 ```{r echo=FALSE, fig.align= "center"}
+
 ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
   geom_point()+
   geom_smooth()+
   labs(y= "Mean Precipitation (mm)", x= "Date")
 ```
 
-Results: Overall
+Results: By Decade Total Precip
 ========================================================
 - No Significant Increase :(
 ```{r include=FALSE}
@@ -203,14 +204,17 @@ Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
 ```
 
 ```{r echo=FALSE, fig.align= "center"}
+
 grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
 ```
 
-Results: By Decade
+Results: By Decade 1-year events
 ========================================================
 - Significant Increase!
 ```{r echo=FALSE, fig.align= "center"}
+
 require(gridExtra)
+
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
 

@@ -144,14 +144,14 @@ Results: Overall
 - Significant Increase!
 <img src="Presentation-figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
 
-Results: Overall
+Results: By Decade Total Precip
 ========================================================
 - No Significant Increase :(
 
 
 <img src="Presentation-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
-Results: By Decade
+Results: By Decade 1-year events
 ========================================================
 - Significant Increase!
 <img src="Presentation-figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
