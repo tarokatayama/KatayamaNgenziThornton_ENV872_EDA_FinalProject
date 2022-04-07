@@ -153,11 +153,11 @@ LateTable
 ```
 
 ```{r initial plots}
-#plot precip over years
+#plot precip over years to see general trend. Warning: Plots zoomed in to show trend more clearly, some outliers are not included.
 ggplot(Beaufort_RAW, aes(x=Date, y=Mean_Precip_mm))+
   geom_line()+
-  ylim(c(0,125))
-
+  ylim(c(0,80))+
+  geom_smooth(method=lm)
 
 #plot total monthly precip data to see rough trend
 ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
@@ -165,7 +165,7 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_smooth(method = lm) 
   
 ```
-
+Analysis:
 ```{r t-test Overall& Seasonal Mann-Kendall Ovearall}
 t.test(Beaufort_RAW$Mean_Precip_mm)
 #significant
@@ -206,44 +206,6 @@ t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
 t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 #significant!<- There are more statistically significant 1 year precipitation events in later decade. 
 ```
-
-```{r mann-kendall for decades}
-#Will not include this in final....
-
-#Note: probably won't include this because the data is seasonal data
-MannKendall(Beaufort_early$PrecipInches)
-MannKendall(Beaufort_early$sigPrecip)
-#neither are significant
-
-MannKendall(Beaufort_Late$PrecipInches)
-#significant
-MannKendall(Beaufort_Late$sigPrecip)
-#not significant
-```
-
-```{r seasonal mann-kendall for decades }
-#Dont think we need to keep this as it shows if precip is increasing in just this decade or not
-Late_full_ts <- ts(Beaufort_Late$PrecipInches, start= c(1,2007), frequency = 365)
-SeasonalMannKendall(Late_full_ts)
-#significant
-
-#Shouldn't keep this
-Late_sig_ts <- ts(Beaufort_Late$sigPrecip, start= c(1,2007), frequency = 365)
-SeasonalMannKendall(Late_sig_ts)
-#not significant
-
-#Dont think we need to keep this as it shows if precip is increasing in just this decade or not
-Early_full_ts <- ts(Beaufort_early$PrecipInches, start = c(1,1997), frequency = 365)
-SeasonalMannKendall(Early_full_ts)
-#not significant
-
-#will not keep this too 
-Early_sig_ts <- ts(Beaufort_early$sigPrecip, start = c(1,1997), frequency = 365)
-SeasonalMannKendall(Early_sig_ts)
-#not significant 
-
-```
-
 
 Let's inspect the ACF and PACF plots. Notice the ACF plot has repeating positive and negative components (indicating seasonality), whereas the PACF decays over time without a clear seasonal structure.
 ```{r}
