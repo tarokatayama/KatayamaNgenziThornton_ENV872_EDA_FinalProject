@@ -7,8 +7,38 @@ autosize: true
 Map of Beaufort
 ========================================================
 
-```{r}
-#insert map
+```{r include=FALSE}
+library(mapview)
+library(sf)
+
+Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
+
+#Convert the the 2 points into a spatial
+Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
+
+Beaufort_Town <- st_as_sf(Beaufort_Pol)
+
+mapview(Beaufort_Town, col.regions = "red")
+
+# Load NC counties info 
+NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
+  filter(STATEFP == 37)
+
+# Visualize MC data
+mapview(NC_data)
+
+# Filter Beaufort county and map it 
+Beaufort_County <- NC_data %>% 
+  filter(NAME %in% "Carteret")
+
+mapview(Beaufort_County, col.regions = "orange")
+```
+
+
+```{r echo=FALSE}
+mapview(NC_data, alpha.regions = 0.2) +
+  mapview(Beaufort_County, col.regions = "orange") +
+  mapview(Beaufort_Town, col.regions = "red")
 ```
 
 Question and Hypothesis
