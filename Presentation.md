@@ -69,7 +69,7 @@ Beaufort_early<- Beaufort_RAW%>%
 
 Analysis of Data: Overall Precip
 ========================================================
-- t-test using mean monthly precip
+- t-test using mean daily precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
 
 
