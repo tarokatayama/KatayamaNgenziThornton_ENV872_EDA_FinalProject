@@ -5,7 +5,7 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Precipitation Change in Beaufort"
+title: "Precipitation Change in Beaufort, NC"
 subtitle: "Web address for GitHub repository"
 author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 fontsize: 12pt
@@ -42,6 +42,7 @@ library(tidyverse)
 library(dplyr)
 library(lubridate)
 library(mapview)
+library(sf)
 library(knitr)
 library(Kendall)
 library(zoo)
@@ -74,7 +75,36 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
 ```
 
 ```{r Map of Beaufort}
+#Create a beaufort point using long and lat 
 
+Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
+
+#Convert the the 2 points into a spatial
+Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
+
+mapview(Beaufort_Pol)
+
+Beaufort_Town <- st_as_sf(Beaufort_Pol)
+
+mapview(Beaufort_Town, col.regions = "red")
+
+# Load NC counties info 
+NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
+  filter(STATEFP == 37)
+
+# Visualize MC data
+mapview(NC_data)
+
+# Filter Beaufort county and map it 
+Beaufort_County <- NC_data %>% 
+  filter(NAME %in% "Carteret")
+
+mapview(Beaufort_County, col.regions = "orange")
+
+# Combine all map 
+mapview(NC_data, alpha.regions = 0.2) +
+  mapview(Beaufort_County, col.regions = "orange") +
+  mapview(Beaufort_Town, col.regions = "red")
 ```
 
 Wrangle Data
