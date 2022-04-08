@@ -113,7 +113,7 @@ Analysis of Data: Overall Precip
 ========================================================
 - t-test using mean daily  precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
-```{r echo=FALSE, fig.align=}
+```{r echo=FALSE, fig.align="center"}
 #plot the decomposed
 #plot(Beaufort_decompose)
 
