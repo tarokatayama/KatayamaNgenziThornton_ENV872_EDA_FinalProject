@@ -42,6 +42,7 @@ library(tidyverse)
 library(dplyr)
 library(lubridate)
 library(mapview)
+mapviewOptions(fgb = FALSE)
 library(sf)
 library(knitr)
 library(Kendall)
@@ -75,7 +76,7 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
 ```
 
 ```{r Map of Beaufort}
-#Create a beaufort point using long and lat 
+#Create a Beaufort point using long and lat 
 
 Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
 
