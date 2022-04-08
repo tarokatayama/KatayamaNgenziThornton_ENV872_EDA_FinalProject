@@ -80,7 +80,7 @@ Beaufort_early<- Beaufort_RAW%>%
 
 Analysis of Data: Overall Precip
 ========================================================
-- t-test using mean monthly precip
+- t-test using mean daily precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
 ```{r include=FALSE}
 Beaufort_RAW_2<-Beaufort_RAW
@@ -111,10 +111,10 @@ t.test(Beaufort_RAW$Mean_Precip_mm)
 
 Analysis of Data: Overall Precip
 ========================================================
-- t-test using mean monthly precip
+- t-test using mean daily  precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
-```{r echo=FALSE, fig.align= "center"}
-#plot the decomosed
+```{r echo=FALSE, fig.align=}
+#plot the decomposed
 #plot(Beaufort_decompose)
 
 Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)

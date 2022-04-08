@@ -69,7 +69,7 @@ Beaufort_early<- Beaufort_RAW%>%
 
 Analysis of Data: Overall Precip
 ========================================================
-- t-test using mean monthly precip
+- t-test using mean daily precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
 
 
@@ -91,75 +91,25 @@ mean of x
 
 Analysis of Data: Overall Precip
 ========================================================
-- t-test using mean monthly precip
+- t-test using mean daily  precip
 - Seasonal Mann Kendall (to look at trend without seasonality)
 
-```
-tau = 0.0189, 2-sided pvalue =0.0056612
-```
-
-
-Analysis of Data: By Decades
-========================================================
-- t-test to compare precip by decade
-- t-test to compare 1-year precip events by decade
 
 
 
 
-```
 
-	Welch Two Sample t-test
 
-data:  Beaufort_early$PrecipInches and Beaufort_Late$PrecipInches
-t = -0.64906, df = 7133.8, p-value = 0.5163
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -0.02812072  0.01413102
-sample estimates:
-mean of x mean of y 
-0.1627598 0.1697546 
-```
-Analysis of Data: By Decades
-========================================================
-- t-test to compare precip by decade
-- t-test to compare 1-year precip events by decade
+
+
+
+
+
+
+
+
+
 
 ```
-
-	Welch Two Sample t-test
-
-data:  Beaufort_early$sigPrecip and Beaufort_Late$sigPrecip
-t = -2.7068, df = 5451.7, p-value = 0.006815
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -0.028681849 -0.004586864
-sample estimates:
-  mean of x   mean of y 
-0.005537589 0.022171945 
+Error in eval(x, envir = envir) : argument is missing, with no default
 ```
-
-Results: Overall
-========================================================
-- Significant Increase!
-<img src="Presentation-figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
-
-Results: By Decade Total Precip
-========================================================
-- No Significant Increase :(
-
-
-<img src="Presentation-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
-
-Results: By Decade 1-year events
-========================================================
-- Significant Increase!
-<img src="Presentation-figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
-
-Summary
-========================================================
-
-Large storm events = bad!
-
-Climate Change = bad!
-
