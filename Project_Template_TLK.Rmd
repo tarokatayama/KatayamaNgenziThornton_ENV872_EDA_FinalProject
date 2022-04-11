@@ -44,6 +44,7 @@ library(tidyverse)
 library(dplyr)
 library(lubridate)
 library(mapview)
+mapviewOptions(fgb = FALSE)
 library(sf)
 library(knitr)
 library(Kendall)
@@ -81,7 +82,9 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
 ```
 
 ```{r Map of Beaufort}
-#Create a beaufort point using long and lat 
+#Create a Beaufort point using long and lat 
+
+mapviewOptions(fgb=FALSE)
 
 Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
 
@@ -111,6 +114,13 @@ mapview(Beaufort_County, col.regions = "orange")
 mapview(NC_data, alpha.regions = 0.2) +
   mapview(Beaufort_County, col.regions = "orange") +
   mapview(Beaufort_Town, col.regions = "red")
+
+#plot in ggplot to put in presentation 
+ggplot()+
+  geom_sf(data = NC_data, aes(), alpha=0.2)+
+  geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
+  geom_sf(data= Beaufort_Town, col = "red")
+  
 ```
 
 Wrangle Data
