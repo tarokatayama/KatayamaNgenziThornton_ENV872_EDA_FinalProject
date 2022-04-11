@@ -79,11 +79,11 @@ Question and Hypothesis
 ========================================================
 Question 1: Has there been a significant increase in precipitation in Beaufort, NC from 1980 to 2016? 
 
-Question 2: Has there been a significant increase in 24h/1-year precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
+Question 2: Has there been a significant increase in 1-year/24h precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
 
 Null Hypothesis 1: There is no significant change in precipitation from 1980 to 2016.
 
-Null Hypothesis 2: There is no significant change in 24h/1-year precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
+Null Hypothesis 2: There is no significant change in 1-year/24h precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
 
 Data
 ========================================================
