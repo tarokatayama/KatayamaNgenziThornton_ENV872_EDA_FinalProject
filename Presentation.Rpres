@@ -7,7 +7,43 @@ autosize: true
 Map of Beaufort
 ========================================================
 
-```{r Beaufort Map, echo=FALSE}
+```{r include=FALSE}
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(mapview)
+library(sf)
+library(knitr)
+library(Kendall)
+library(zoo)
+library(gridExtra)
+options(scipen = 4) # limit number of digits 
+
+# Load your datasets
+Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
+
+# Rename columns to logical names
+
+names(Beaufort_RAW)[1] <- "Date"
+names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
+
+#Set Date as a Date
+Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
+
+# Set your ggplot theme
+Theme <- theme_classic(base_size = 7) +
+  theme(axis.text = element_text(color = "black"),
+        legend.position = "right")
+theme_set(Theme)
+
+#visualize raw data
+ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
+  geom_point()+
+  geom_smooth()+
+  labs(y= "Mean Precipitation (mm)", x= "Date")
+```
+
+```{r Beaufort Map, include=FALSE}
 #Create a beaufort point using long and lat 
 
 Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
@@ -15,29 +51,22 @@ Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
 #Convert the the 2 points into a spatial
 Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
 
-mapview(Beaufort_Pol)
-
 Beaufort_Town <- st_as_sf(Beaufort_Pol)
-
-mapview(Beaufort_Town, col.regions = "red")
 
 # Load NC counties info 
 NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
   filter(STATEFP == 37)
 
-# Visualize MC data
-mapview(NC_data)
-
 # Filter Beaufort county and map it 
 Beaufort_County <- NC_data %>% 
   filter(NAME %in% "Carteret")
+```
 
-mapview(Beaufort_County, col.regions = "orange")
-
-# Combine all map 
-mapview(NC_data, alpha.regions = 0.2) +
-  mapview(Beaufort_County, col.regions = "orange") +
-  mapview(Beaufort_Town, col.regions = "red")
+```{r echo=FALSE, fig.align="center"}
+ggplot()+
+  geom_sf(data = NC_data, aes(), alpha=0.2)+
+  geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
+  geom_sf(data= Beaufort_Town, col = "red")
 ```
 
 Question and Hypothesis
@@ -55,13 +84,6 @@ Data
 - Data from DAYMET, attained from Hydrology class 
 - Historical precipitation data from Beaufort, NC
 
-```{r include=FALSE}
-Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
-
-names(Beaufort_RAW)[1] <- "Date"
-names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
-Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
-```
 See column headers below
 ```{r echo=FALSE}
 colnames(Beaufort_RAW)
@@ -69,18 +91,6 @@ colnames(Beaufort_RAW)
 
 Data Wrangling 
 ========================================================
-
-```{r include=FALSE}
-library(tidyverse)
-library(dplyr)
-library(lubridate)
-library(mapview)
-library(knitr)
-library(Kendall)
-library(zoo)
-library(gridExtra)
-options(scipen = 4) # limit number of digits 
-```
 - Grouped by month and year
 - Mean and sum of precipitation attained
 ```{r}
