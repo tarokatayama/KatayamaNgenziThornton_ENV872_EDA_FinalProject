@@ -242,6 +242,7 @@ Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
   labs(y="Precipitation (inches)", x= "Date")
 ```
 
+
 ```{r echo=FALSE, fig.align= "center"}
 
 grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
@@ -251,8 +252,6 @@ Results: By Decade 1-year events
 ========================================================
 - Significant Increase!
 ```{r echo=FALSE, fig.align= "center"}
-
-require(gridExtra)
 
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
