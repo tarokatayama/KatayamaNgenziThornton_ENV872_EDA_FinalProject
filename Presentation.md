@@ -1,4 +1,4 @@
-Climate Change effects on large storm events in Beaufort, NC
+Climate Change Effects on Large Precip. Events in Beaufort, NC
 ========================================================
 author: Taro Katayama, Karen Thornton, Lambert Ngenzi
 date: 04/11/22
@@ -17,11 +17,11 @@ Question and Hypothesis
 ========================================================
 Question 1: Has there been a significant increase in precipitation in Beaufort, NC from 1980 to 2016? 
 
-Question 2: Has there been a significant increase in 1-year precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
+Question 2: Has there been a significant increase in 24h/1-year precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
 
 Null Hypothesis 1: There is no significant change in precipitation from 1980 to 2016.
 
-Null Hypothesis 2: There is no significant change in 1-year precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
+Null Hypothesis 2: There is no significant change in 24h/1-year precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
 
 Data
 ========================================================
@@ -73,18 +73,13 @@ Analysis of Data: Overall Precip
 
 
 
+```r
+Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
+Beaufort.trend
 ```
 
-	One Sample t-test
-
-data:  Beaufort_RAW$Mean_Precip_mm
-t = 43.492, df = 13504, p-value < 2.2e-16
-alternative hypothesis: true mean is not equal to 0
-95 percent confidence interval:
- 3.953508 4.326684
-sample estimates:
-mean of x 
- 4.140096 
+```
+tau = 0.0189, 2-sided pvalue =0.0056612
 ```
 
 Analysis of Data: Overall Precip
@@ -100,10 +95,13 @@ tau = 0.0189, 2-sided pvalue =0.0056612
 Analysis of Data: By Decades
 ========================================================
 - t-test to compare precip by decade
-- t-test to compare 1-year precip events by decade
 
 
 
+
+```r
+t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
+```
 
 ```
 
@@ -120,8 +118,11 @@ mean of x mean of y
 ```
 Analysis of Data: By Decades
 ========================================================
-- t-test to compare precip by decade
 - t-test to compare 1-year precip events by decade
+
+```r
+t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
+```
 
 ```
 

@@ -1,4 +1,4 @@
-Climate Change effects on large storm events in Beaufort, NC
+Climate Change Effects on Large Precip. Events in Beaufort, NC
 ========================================================
 author: Taro Katayama, Karen Thornton, Lambert Ngenzi
 date: 04/11/22
@@ -8,11 +8,10 @@ Map of Beaufort
 ========================================================
 
 ```{r include=FALSE}
-<<<<<<< HEAD
+
 library(mapview)
 mapviewOptions(fgb = FALSE)
 library(sf)
-=======
 library(tidyverse)
 library(dplyr)
 library(lubridate)
@@ -50,7 +49,7 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
 
 ```{r Beaufort Map, include=FALSE}
 #Create a beaufort point using long and lat 
->>>>>>> 882bc1071a9aab750925c6c14df46678abf18d34
+
 
 Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
 
@@ -59,11 +58,6 @@ Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
 
 Beaufort_Town <- st_as_sf(Beaufort_Pol)
 
-<<<<<<< HEAD
-mapview(Beaufort_Town, col.regions = "red")
-
-=======
->>>>>>> 882bc1071a9aab750925c6c14df46678abf18d34
 # Load NC counties info 
 NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
   filter(STATEFP == 37)
@@ -71,34 +65,25 @@ NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>%
 # Filter Beaufort county and map it 
 Beaufort_County <- NC_data %>% 
   filter(NAME %in% "Carteret")
-<<<<<<< HEAD
 
 ```
 
-
-```{r echo=FALSE}
-mapview(NC_data, alpha.regions = 0.2) +
-  mapview(Beaufort_Town, col.regions = "red")
-=======
-```
-
-```{r echo=FALSE, fig.align="center"}
+```{r echo=FALSE, fig.align="center", fig.height=7, fig.width=7}
 ggplot()+
   geom_sf(data = NC_data, aes(), alpha=0.2)+
   geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
   geom_sf(data= Beaufort_Town, col = "red")
->>>>>>> 882bc1071a9aab750925c6c14df46678abf18d34
 ```
 
 Question and Hypothesis
 ========================================================
 Question 1: Has there been a significant increase in precipitation in Beaufort, NC from 1980 to 2016? 
 
-Question 2: Has there been a significant increase in 1-year precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
+Question 2: Has there been a significant increase in 24h/1-year precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
 
 Null Hypothesis 1: There is no significant change in precipitation from 1980 to 2016.
 
-Null Hypothesis 2: There is no significant change in 1-year precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
+Null Hypothesis 2: There is no significant change in 24h/1-year precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
 
 Data
 ========================================================
@@ -164,9 +149,9 @@ Beaufort_decompose<- stl(Beaufort_TS, s.window = "periodic")
 ```
 
 
-```{r echo=FALSE}
-t.test(Beaufort_RAW$Mean_Precip_mm)
-#significant
+```{r echo=TRUE}
+Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
+Beaufort.trend
 ```
 
 Analysis of Data: Overall Precip
@@ -186,7 +171,6 @@ Beaufort.trend
 Analysis of Data: By Decades
 ========================================================
 - t-test to compare precip by decade
-- t-test to compare 1-year precip events by decade
 ```{r include=FALSE}
 Beaufort_Late<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
@@ -200,17 +184,15 @@ Beaufort_Late<- Beaufort_RAW%>%
 ```
 
 
-```{r echo=FALSE}
+```{r echo=TRUE}
 t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
-#not significant
+
 ```
 Analysis of Data: By Decades
 ========================================================
-- t-test to compare precip by decade
 - t-test to compare 1-year precip events by decade
-```{r echo=FALSE}
+```{r echo=TRUE}
 t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
-#significant
 ```
 
 Results: Overall
