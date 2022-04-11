@@ -95,23 +95,11 @@ See column headers below
 colnames(Beaufort_RAW)
 ```
 
-Data Wrangling 
-========================================================
-- Grouped by month and year
-- Mean and sum of precipitation attained
-```{r}
-Beaufort_Clean<- Beaufort_RAW%>%
-  group_by(year,month)%>%
-   summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
-             sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
-  mutate(Date= my(paste0(month,"-", year)))
-```
-
 Data Wrangling: Early decade
 ========================================================
 - Convert from mm to inches
 - Filtered the date to show first decade (1997 to 2007)
-- Created column for "1-year precipitation events" (Threshold = 3.66 inches per day)
+- Created column for "1-year/24h precipitation events" (Threshold = 3.66 inches per day)
 ```{r}
 Beaufort_early<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
@@ -148,23 +136,20 @@ Beaufort_TS<- ts(Beaufort_RAW_2$Mean_Precip_mm,
 Beaufort_decompose<- stl(Beaufort_TS, s.window = "periodic")
 ```
 
-
 ```{r echo=TRUE}
 Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
 Beaufort.trend
 ```
 
-Analysis of Data: Overall Precip
+Results: Overall
 ========================================================
-- t-test using mean daily  precip
-- Seasonal Mann Kendall (to look at trend without seasonality)
-```{r echo=FALSE, fig.align="center"}
-#plot the decomposed
-#plot(Beaufort_decompose)
+- Significant Increase!
+```{r echo=FALSE, fig.align= "center"}
 
-Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
-Beaufort.trend
-#significant
+ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
+  geom_point()+
+  geom_smooth()+
+  labs(y= "Mean Precipitation (mm)", x= "Date")
 ```
 
 
@@ -187,23 +172,6 @@ Beaufort_Late<- Beaufort_RAW%>%
 ```{r echo=TRUE}
 t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
 
-```
-Analysis of Data: By Decades
-========================================================
-- t-test to compare 1-year precip events by decade
-```{r echo=TRUE}
-t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
-```
-
-Results: Overall
-========================================================
-- Significant Increase!
-```{r echo=FALSE, fig.align= "center"}
-
-ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
-  geom_point()+
-  geom_smooth()+
-  labs(y= "Mean Precipitation (mm)", x= "Date")
 ```
 
 Results: By Decade Total Precip
@@ -249,6 +217,15 @@ Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
 ```{r echo=FALSE, fig.align= "center"}
 
 grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
+```
+
+
+
+Analysis of Data: By Decades
+========================================================
+- t-test to compare 1-year/24h precip events by decade
+```{r echo=TRUE}
+t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 ```
 
 Results: By Decade 1-year events

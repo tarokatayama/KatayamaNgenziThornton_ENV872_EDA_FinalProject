@@ -35,24 +35,11 @@ See column headers below
 [5] "day_of_month"  
 ```
 
-Data Wrangling 
-========================================================
-- Grouped by month and year
-- Mean and sum of precipitation attained
-
-```r
-Beaufort_Clean<- Beaufort_RAW%>%
-  group_by(year,month)%>%
-   summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
-             sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
-  mutate(Date= my(paste0(month,"-", year)))
-```
-
 Data Wrangling: Early decade
 ========================================================
 - Convert from mm to inches
 - Filtered the date to show first decade (1997 to 2007)
-- Created column for "1-year precipitation events" (Threshold = 3.66 inches per day)
+- Created column for "1-year/24h precipitation events" (Threshold = 3.66 inches per day)
 
 ```r
 Beaufort_early<- Beaufort_RAW%>%
@@ -72,7 +59,6 @@ Analysis of Data: Overall Precip
 
 
 
-
 ```r
 Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
 Beaufort.trend
@@ -82,14 +68,10 @@ Beaufort.trend
 tau = 0.0189, 2-sided pvalue =0.0056612
 ```
 
-Analysis of Data: Overall Precip
+Results: Overall
 ========================================================
-- t-test using mean daily  precip
-- Seasonal Mann Kendall (to look at trend without seasonality)
-
-```
-tau = 0.0189, 2-sided pvalue =0.0056612
-```
+- Significant Increase!
+<img src="Presentation-figure/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
 
 
 Analysis of Data: By Decades
@@ -116,9 +98,20 @@ sample estimates:
 mean of x mean of y 
 0.1627598 0.1697546 
 ```
+
+Results: By Decade Total Precip
+========================================================
+- No Significant Increase :(
+
+
+
+<img src="Presentation-figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+
+
+
 Analysis of Data: By Decades
 ========================================================
-- t-test to compare 1-year precip events by decade
+- t-test to compare 1-year/24h precip events by decade
 
 ```r
 t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
@@ -138,23 +131,10 @@ sample estimates:
 0.005537589 0.022171945 
 ```
 
-Results: Overall
-========================================================
-- Significant Increase!
-<img src="Presentation-figure/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
-
-Results: By Decade Total Precip
-========================================================
-- No Significant Increase :(
-
-
-
-<img src="Presentation-figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
-
 Results: By Decade 1-year events
 ========================================================
 - Significant Increase!
-<img src="Presentation-figure/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+<img src="Presentation-figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
 
 Summary
 ========================================================
