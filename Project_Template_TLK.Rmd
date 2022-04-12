@@ -281,12 +281,11 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 
 
 ```{r}
-# Only the first 3 are statistically significant autocorrelation trend of precipitation. The ACF starts with a log of 0, depicting the correlation of the time series, resulting in 1. 
+# There is not autocorrelation, although the first 3 show a statistically significant autocorrelation trend of precipitation.
 acf(Beaufort_TS) 
 
 pacf(Beaufort_TS) 
-#Only the first 3 lag time are statistically significant while others are not.  
-#And the second one is negative partial autocorrelation. 
+#No autocovariance, despite the first 3 lag time are statistically significant while others are not. And the second one is negative partial autocorrelation. 
 ```
 
 
