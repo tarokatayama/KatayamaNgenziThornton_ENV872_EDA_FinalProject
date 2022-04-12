@@ -279,14 +279,14 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 #significant!<- There are more statistically significant 1 year precipitation events in later decade. 
 ```
 
-Let's inspect the ACF and PACF plots. Notice the ACF plot has repeating positive and negative components (indicating seasonality), whereas the PACF decays over time without a clear seasonal structure.
-```{r}
 
+```{r}
+# Only the first 3 are statistically significant autocorrelation trend of precipitation. The ACF starts with a log of 0, depicting the correlation of the time series, resulting in 1. 
 acf(Beaufort_TS) 
 
 pacf(Beaufort_TS) 
-
-
+#Only the first 3 lag time are statistically significant while others are not.  
+#And the second one is negative partial autocorrelation. 
 ```
 
 
