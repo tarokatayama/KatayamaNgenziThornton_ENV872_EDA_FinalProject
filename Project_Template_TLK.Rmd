@@ -281,17 +281,10 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 
 Let's inspect the ACF and PACF plots. Notice the ACF plot has repeating positive and negative components (indicating seasonality), whereas the PACF decays over time without a clear seasonal structure.
 ```{r}
-#acf(Late_full_ts) 
-#pacf(Late_full_ts) 
 
-#acf(Late_sig_ts)
-#pacf(Late_sig_ts)
+acf(Beaufort_TS) 
 
-#acf(Early_full_ts)
-#pacf(Early_full_ts)
-
-#acf(Early_sig_ts)
-#pacf(Early_sig_ts)
+pacf(Beaufort_TS) 
 
 
 ```
