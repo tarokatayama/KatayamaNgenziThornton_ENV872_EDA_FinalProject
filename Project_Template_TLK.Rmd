@@ -5,6 +5,7 @@ output:
   html_document:
     df_print: paged
   pdf_document:
+    df_print: paged
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
@@ -59,6 +60,8 @@ Load all packages and get the working directory
 getwd()
 
 # Load your packages
+#install.packages(webshot)
+library(webshot)
 library(tidyverse)
 library(dplyr)
 library(lubridate)
