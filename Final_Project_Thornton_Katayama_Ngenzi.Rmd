@@ -2,10 +2,10 @@
 title: "Precipitation Change in Beaufort, NC"
 author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 output:
-   html_document:
-    df_print: paged
-    lof: true
-    toc: true
+  html_document:
+   df_print: paged
+   lof: true
+   toc: true
   pdf_document:
     df_print: paged
     keep_tex: yes
