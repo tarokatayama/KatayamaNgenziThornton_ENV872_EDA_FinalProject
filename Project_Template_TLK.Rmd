@@ -38,20 +38,27 @@ Null Hypothesis 2: There is no significant change in 1-year/24h precipitation ev
 \newpage
 
 # Dataset Information
+Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data shows historical precipitation data from Beaufort, NC for the years 1980 to 2016. 
+
+"Significant Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches. This means that in 24h the probability of it raining 3.66 inches should only happen once a year. These events are considered large storm events.
+
+
 ```{r}
-
+# Load your datasets
+Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
+view(Beaufort_RAW)
 ```
-
-** Significant precipitation events are considered "1 year/24h events" using NOAA. 
 
 \newpage
 
 #Exploratory Analysis
 
-```{r setup, include=FALSE}
+Load all packages and get the working directory
+```{r setup}
 
 # Set your working directory
 getwd()
+
 # Load your packages
 library(tidyverse)
 library(dplyr)
@@ -65,12 +72,11 @@ library(zoo)
 library(gridExtra)
 options(scipen = 4) # limit number of digits 
 
-# Load your datasets
-Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
-view(Beaufort_RAW)
+```
+
+```{r setup2}
 
 # Rename columns to logical names
-
 names(Beaufort_RAW)[1] <- "Date"
 names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
 
@@ -90,19 +96,21 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
   labs(y= "Mean Precipitation (mm)", x= "Date")
 ```
 
-
+Create a Map of Beaufort for visualization 
 ```{r Map of Beaufort}
-#Create a Beaufort point using long and lat 
 
+#Create a Beaufort point using long and lat 
 mapviewOptions(fgb=FALSE)
 
 Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
 
-#Convert the the 2 points into a spatial
+#Convert the the two points into spatial data
 Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
 
+#view the map
 mapview(Beaufort_Pol)
 
+#repeat the steps for the next layer
 Beaufort_Town <- st_as_sf(Beaufort_Pol)
 
 mapview(Beaufort_Town, col.regions = "red")
@@ -133,19 +141,31 @@ ggplot()+
   
 ```
 
-Wrangle Data
+Wrangle Data for analysis
 ```{r clean}
-#Created monthly mean precipitation + total monthly precipitation dataset for Beaufort. This dataset only for visualization purposes
+#Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
    summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
              sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
+
+#Plot precipitation over years to see general trend (Raw dataset). Warning: Plot zoomed in to show trend more clearly; some outliers are not included.
+ggplot(Beaufort_RAW, aes(x=Date, y=Mean_Precip_mm))+
+  geom_line()+
+  ylim(c(0,80))+
+  geom_smooth(method=lm)
+
+#Plot total monthly precipitation data to see rough trend (Clean dataset)
+ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
+  geom_line()+
+  geom_smooth(method = lm) 
 ```
 
-
+Create a dataset for the early decade
 ```{r early}
-#10 year time frame, precipitation in inches (1997-01-01 to 2006-12-31) +significant 24hr precipitation events in magnitude+ # of significant precipitation events
+#This dataset has a 10 year time frame with precipitation in inches (1997-01-01 to 2006-12-31) and significant 1-year/24hr precipitation events in magnitude and number of significant precipitation events
+
 Beaufort_early<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
@@ -155,7 +175,7 @@ Beaufort_early<- Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
   
-#Created Beaufort early dataset, where non significant precipitation events were classified as NA.
+#Create a Beaufort early dataset, where non-significant 1-year/24h precipitation events were classified as NA.
 Beaufort_earlyNo0Precip<-Beaufort_RAW%>%
   mutate(PrecipInches=Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
@@ -165,29 +185,32 @@ Beaufort_earlyNo0Precip<-Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
 
-#Summary of number of sig events per year
+#Summary of number of 1-year/24hr events per year
 Beaufort_early_summary<- Beaufort_early%>%
   group_by(year)%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
-#Created table of number of significant events per year.
-EarlyTable<- kable(Beaufort_early_summary, caption = "Significant Events Over Year")
+#Create a table of number of 1-year/24hr events per year.
+EarlyTable<- kable(Beaufort_early_summary, caption = "1-year/24hr Events Over Year")
 EarlyTable
 
-#Created figure with # and magnitude of significant events per year.
+#Create a figure with number and magnitude of significant events per year.
 Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
-  labs(y="1-year storm events", x= "Date")
+  labs(y="1-year/24hr storm events", x= "Date")
 Plot_early_sig
 
+#Create a figure showing the overall precipitation for the early decade
 Plot_early_overall <- ggplot(Beaufort_early, aes(x=Date , y=PrecipInches))+
   geom_point()+
   labs(y="Precipitation (inches)", x= "Date")
 Plot_early_overall
 ```
 
+Create a dataset for the late decade
 ```{r late}
-#10 year time frame, precipitation in inches (2007-01-01 to 2016-12-30) +significant 24hr precipitation events in magnitude + # of significant precipitation events
+#This dataset has a 10 year time frame, precipitation in inches (2007-01-01 to 2016-12-30) and significant 1-year/24hr precipitation events in magnitude and number of significant precipitation events
+
 Beaufort_Late<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date > "2006-12-31")%>%
@@ -197,7 +220,7 @@ Beaufort_Late<- Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
 
-#Created Beaufort late dataset, where non significant precipitation events were classified as NA.
+#Create a Beaufort late dataset, where non significant 1-year/24hr precipitation events were classified as NA.
 Beaufort_LateNo0Precip<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date > "2006-12-31")%>%
@@ -207,57 +230,44 @@ Beaufort_LateNo0Precip<- Beaufort_RAW%>%
          day_of_month, PrecipInches, sigPrecip, NumSigPrecip)%>%
   drop_na()
 
-#Summary of number of sig events per year (Late)
+#Summary of number of significant 1-year.24hr events per year (Late)
 Beaufort_late_summary<- Beaufort_Late%>%
   group_by(year)%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
-#Created figure with # and magnitude of significant events per year.
+#Create a figure with number and magnitude of significant 1-year/24hr events per year.
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   labs(y="1-year storm events", x= "Date")
 Plot_late_sig
 
+#Create a figure showing the overall precipitation for the late decade
 Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
   geom_point()+
   labs(y="Precipitation (inches)", x= "Date")
 Plot_late_overall
 
-#Created table of number of significant events per year.
+#Create a table of number of significant 1-year/24hr events per year.
 LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year")
 LateTable
-
-
 ```
 
+Create a plot to combine the 1-year/24 hour events for each decade
 ```{r combined one year storms}
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
-```
-
-
-```{r initial plots}
-#plot precip over years to see general trend. Warning: Plots zoomed in to show trend more clearly, some outliers are not included.
-ggplot(Beaufort_RAW, aes(x=Date, y=Mean_Precip_mm))+
-  geom_line()+
-  ylim(c(0,80))+
-  geom_smooth(method=lm)
-
-#plot total monthly precip data to see rough trend
-ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
-  geom_line()+
-  geom_smooth(method = lm) 
-  
 ```
 
 \newpage 
 
 # Analysis
 
+Perform t-test and seasonal Mann-Kendall for overall dataset
 ```{r t-test Overall& Seasonal Mann-Kendall Ovearall}
-t.test(Beaufort_RAW$Mean_Precip_mm)
-#significant
 
-#Using Seasonal Mann-Kendall to look at trend excluding seasonality. Will be better than t-test, but we ar just running both just in case.
+t.test(Beaufort_RAW$Mean_Precip_mm)
+#significant <- This means that there is a significant change in precipitation over the years 1980 to 2016
+
+#Using Seasonal Mann-Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t-test. That being said, both tests were both run.
 Beaufort_RAW_2<-Beaufort_RAW
 
 #Used linear interpolation to fill missing data for precipitation data.
@@ -281,15 +291,17 @@ plot(Beaufort_decompose)
 #Ran a seasonal Mann Kendall to see if there is a change in precipitation over the time of the data frame. Used seasonal Mann-Kendall to exclude seasonality of precipitation. 
 Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
 Beaufort.trend
-#Significant!
+#Significant! <- This means that when you exclude seasonality there is still a significant change in precipitation from 1980 to 2016
 ```
 
+T-test was run to compare the two decades
 ```{r t-test for decades}
+
 #Here we are looking to see if there is a change in precipitation amount comparing two decades (1999-2006) & (2007-2016)
 t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
 #not significant<- meaning precipitation amount not significantly different over the two decades
 
-#Here we compared the significant precipitation events for the two decades (1999-2006) & (2007-2016).
+#Here we compared the significant 1-year/24hr precipitation events for the two decades (1999-2006) & (2007-2016).
 t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 #significant!<- There are more statistically significant 1 year precipitation events in later decade. 
 ```
