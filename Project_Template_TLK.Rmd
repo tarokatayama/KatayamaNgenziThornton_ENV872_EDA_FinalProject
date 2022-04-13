@@ -46,7 +46,7 @@ Data was originally attained online from DAYMET for a Hydrology assignment durin
 
 ```{r}
 # Load your datasets
-Beaufort_RAW<-read.csv("./Data/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
+Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
 ```
 
 \newpage
