@@ -88,11 +88,14 @@ names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
 Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
 
 # Set your ggplot theme
-Theme <- theme_classic(base_size = 7) +
+Theme <- theme_classic(base_size = 9) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "right")
 theme_set(Theme)
 
+#Save processed Raw to processed folder
+write.csv(Beaufort_Processed, row.names = FALSE, 
+          file = "./Data/")
 ```
 
 # Create a Map of Beaufort for Visualization Aid
