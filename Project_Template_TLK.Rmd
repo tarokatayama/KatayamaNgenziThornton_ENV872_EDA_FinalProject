@@ -201,7 +201,8 @@ EarlyTable
 Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
-  labs(y="1-year/24hr storm events (in)", x= "Date")
+  labs(y="1-year/24hr storm events (in)", x= "Date") +
+  ggtitle("Early Signficant Events")
 Plot_early_sig
 
 #Create a figure showing the overall precipitation for the early decade
@@ -243,7 +244,8 @@ Beaufort_late_summary<- Beaufort_Late%>%
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
-  labs(y="1-year/24h storm events (in) ", x= "Date")
+  labs(y="1-year/24h storm events (in) ", x= "Date") +
+  ggtitle("Late Signficant Events")
 Plot_late_sig
 
 #Create a figure showing the overall precipitation for the late decade
@@ -327,5 +329,7 @@ pacf(Beaufort_TS)
 After careful analysis, it has been concluded that there is a significant increase in precipitation from 1980 to 2016 in Beaufort, NC. When comparing decade 1 (1997 to 2006) to decade 2 (2007 to 2016) there was no significant increase in precipitation.That being said, when looking at significant 1-year/24hr storm events with a threshold of 3.66 inches there was a significant increase from decade 1 to decade 2. 
 
 While there isn't enough information to draw conclusions based on precipitation alone, our prediction is climate change as the driver behind the increase in 1-year/24hr storm events between decades. 
+It will also be interested to use a longer period of data (more than 30 years) 
+to see if there is any new or different trends we could not capture with our data. 
 
 Large storm events are important to track in future climate change studies. 
