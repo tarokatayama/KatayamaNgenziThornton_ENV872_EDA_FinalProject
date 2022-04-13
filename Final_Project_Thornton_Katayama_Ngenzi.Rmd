@@ -56,8 +56,6 @@ getwd()
 Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
 ```
 
-
-
 Load all packages
 ```{r setup, message=FALSE, warning=FALSE}
 
@@ -88,7 +86,10 @@ Initial Wrangling
 str(Beaufort_RAW)
 
 #summarize the data
-summarise(Beaufort_RAW)
+summary(Beaufort_RAW)
+
+#check dimensions
+dim(Beaufort_RAW)
 
 # Rename columns to logical names
 names(Beaufort_RAW)[1] <- "Date"
