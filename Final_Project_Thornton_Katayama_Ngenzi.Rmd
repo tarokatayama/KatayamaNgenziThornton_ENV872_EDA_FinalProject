@@ -87,8 +87,17 @@ Initial Wrangling
 #look at the structure
 str(Beaufort_RAW)
 
-#summarize the data
-summarise(Beaufort_RAW)
+#summarize the dataset
+summary(Beaufort_RAW)
+
+#dimension of dataset
+dim(Beaufort_RAW)
+
+#Class of the dataset
+class(Beaufort_RAW)
+
+# Column names of the dataset
+colnames(Beaufort_RAW)
 
 # Rename columns to logical names
 names(Beaufort_RAW)[1] <- "Date"
