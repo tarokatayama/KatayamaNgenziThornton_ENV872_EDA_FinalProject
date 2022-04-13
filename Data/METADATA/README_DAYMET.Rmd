@@ -10,7 +10,7 @@ This dataset was prepared for Environmental Data Analytics (ENV 872) at Duke Uni
 
 This dataset contains precipitation data from Beaufort, NC. 
 # Dataset Information
-Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data shows historical precipitation data from Beaufort, NC for the years 1980 to 2016. This dataset was chosen because it is the most complete and consistent precipitation dataset that we could find. 
+Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester 2021. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data show historical precipitation data from Beaufort, NC for the years 1980 to 2016. This dataset was chosen because it is the most complete and consistent precipitation dataset that we could find. 
 
 Data is comma separated. 
 
