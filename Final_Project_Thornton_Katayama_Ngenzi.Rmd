@@ -5,6 +5,7 @@ output:
   html_document:
    df_print: paged
    lof: true
+   lot: true
    toc: true
   pdf_document:
     df_print: paged
@@ -37,7 +38,6 @@ editor_options:
 
 **Null Hypothesis 2:** There is no significant change in 1-year/24h precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
 
-
 \newpage
 
 # Dataset Information
@@ -45,17 +45,18 @@ Data was originally attained online from DAYMET for a Hydrology assignment durin
 
 "Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches for Beaufort, NC. This means that in 24h the probability of it raining 3.66 inches or more should only happen once a year. These events are considered large storm events.
 
+Get the working directory
+```{r wd, results='hide'}
+# Get your working directory
+getwd()
+```
 
 ```{r}
 # Load your datasets
 Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
 ```
 
-Get the working directory
-```{r wd, results='hide'}
-# Get your working directory
-getwd()
-```
+
 
 Load all packages
 ```{r setup, message=FALSE, warning=FALSE}
@@ -77,8 +78,17 @@ options(scipen = 4) # limit number of digits
 
 ```
 
+\newpage
+
+#Exploratory Analysis
+
 Initial Wrangling
 ```{r setup2}
+#look at the structure
+str(Beaufort_RAW)
+
+#summarize the data
+summarise(Beaufort_RAW)
 
 # Rename columns to logical names
 names(Beaufort_RAW)[1] <- "Date"
@@ -100,10 +110,6 @@ write.csv(Beaufort_RAW, row.names = FALSE,
 #Read in processed data
 Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 ```
-
-\newpage
-
-#Exploratory Analysis
 
 Create a Map of Beaufort for Visualization Aid
 ```{r Map of Beaufort}
