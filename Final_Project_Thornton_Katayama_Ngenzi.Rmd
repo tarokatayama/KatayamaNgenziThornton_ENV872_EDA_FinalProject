@@ -22,6 +22,8 @@ editor_options:
 \newpage
 \tableofcontents
 \newpage
+\listoftables
+\newpage
 \listoffigures 
 \newpage
 
@@ -49,16 +51,11 @@ Data was originally attained online from DAYMET for a Hydrology assignment durin
 Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
 ```
 
-\newpage
-
-# Exploratory Analysis
-
 Get the working directory
 ```{r wd, results='hide'}
 # Get your working directory
 getwd()
 ```
-
 
 Load all packages
 ```{r setup, message=FALSE, warning=FALSE}
@@ -80,8 +77,7 @@ options(scipen = 4) # limit number of digits
 
 ```
 
-# Initial Wrangling
-
+Initial Wrangling
 ```{r setup2}
 
 # Rename columns to logical names
@@ -105,8 +101,11 @@ write.csv(Beaufort_RAW, row.names = FALSE,
 Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 ```
 
-# Create a Map of Beaufort for Visualization Aid
+\newpage
 
+#Exploratory Analysis
+
+Create a Map of Beaufort for Visualization Aid
 ```{r Map of Beaufort}
 
 #Create a Beaufort point using long and lat 
