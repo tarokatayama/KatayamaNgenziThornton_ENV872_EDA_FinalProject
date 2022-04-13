@@ -99,7 +99,7 @@ Data Wrangling: Early decade
 ========================================================
 - Convert from mm to inches
 - Filtered the date to show first decade (1997 to 2007)
-- Created column for "1-year/24h precipitation events" (Threshold = 3.66 inches per day)
+- Created column for "1-year/24h precipitation events" (Threshold > 3.66 inches per day)
 ```{r}
 Beaufort_early<- Beaufort_RAW%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
