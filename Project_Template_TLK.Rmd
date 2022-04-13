@@ -255,14 +255,14 @@ LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year
 LateTable
 ```
 
-# Create a plot to compare overall precipitation fo each decade
+# Compare overall precipitation for each decade
 
 ```{r echo=FALSE, fig.align= "center"}
 
 grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
 ```
 
-# Create a plot to combine the 1-year/24 hour events for each decade
+# Compare the 1-year/24 hour events for each decade
 ```{r combined one year storms}
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
@@ -277,7 +277,7 @@ Perform t-test and seasonal Mann-Kendall for overall dataset
 t.test(Beaufort_RAW$Mean_Precip_mm)
 #significant <- This means that there is a significant change in precipitation over the years 1980 to 2016
 
-#Using Seasonal Mann-Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t-test. That being said, both tests were both run.
+#Using Seasonal Mann-Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t-test. That being said, both tests were run.
 Beaufort_RAW_2<-Beaufort_RAW
 
 #Used linear interpolation to fill missing data for precipitation data.
