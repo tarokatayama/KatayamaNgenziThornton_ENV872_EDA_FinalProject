@@ -17,23 +17,36 @@ editor_options:
 ---
 
 \newpage
-\tableofcontents 
+\tableofcontents
 \newpage
 \listoftables 
 \newpage
 \listoffigures 
 \newpage
 
+# Rationale and Research Questions
 
-Initial steps
-* get data
-* Wrangle data
-* graph data to see what we're working with
-* try a seasonal Mann-kendall test
-* divide decades and see if there's a statistical significant difference 
-* Optional: map of three schools in NC
-* Make presentation
+Question 1: Has there been a significant increase in precipitation in Beaufort, NC from 1980 to 2016? 
 
+Question 2: Has there been a significant increase in 1-year/24h precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
+
+Null Hypothesis 1: There is no significant change in precipitation from 1980 to 2016.
+
+Null Hypothesis 2: There is no significant change in 1-year/24h precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
+
+
+\newpage
+
+# Dataset Information
+```{r}
+
+```
+
+** Significant precipitation events are considered "1 year/24h events" using NOAA. 
+
+\newpage
+
+#Exploratory Analysis
 
 ```{r setup, include=FALSE}
 
@@ -76,10 +89,7 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
   geom_smooth()+
   labs(y= "Mean Precipitation (mm)", x= "Date")
 ```
-```{r}
 
-
-```
 
 ```{r Map of Beaufort}
 #Create a Beaufort point using long and lat 
@@ -132,6 +142,7 @@ Beaufort_Clean<- Beaufort_RAW%>%
              sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
 ```
+
 
 ```{r early}
 #10 year time frame, precipitation in inches (1997-01-01 to 2006-12-31) +significant 24hr precipitation events in magnitude+ # of significant precipitation events
@@ -237,7 +248,11 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_smooth(method = lm) 
   
 ```
-Analysis:
+
+\newpage 
+
+# Analysis
+
 ```{r t-test Overall& Seasonal Mann-Kendall Ovearall}
 t.test(Beaufort_RAW$Mean_Precip_mm)
 #significant
@@ -287,49 +302,6 @@ acf(Beaufort_TS)
 pacf(Beaufort_TS) 
 #No autocovariance, despite the first 3 lag time are statistically significant while others are not. And the second one is negative partial autocorrelation. 
 ```
-
-
-# Rationale and Research Questions
-
-Hypothesis: There is a significant increase in significant storm events in Beaufort, NC
-
-
-We will be looking at the trends of precipitation over time for Beaufort, NC. 
-
-\newpage
-
-# Dataset Information
-```{r}
-
-```
-
-** Significant precipitation events are considered "1 year events" using NOAA. 
-
-
-\newpage
-
-# Exploratory Analysis 
-
-
-
-\newpage
-
-# Analysis
-
-```{r}
-#plot data to see possible trend
-
-```
-
-
-## Question 1: Is there is an increase in precipitation over time at Beaufort, NC?
-* We will be using a Seasonal Kendall-Mann test to determine any trends in precipitation data. 
-* We will be using Seasonal Mann-Kendall test because precipitation has seasonal trends. We want to look at the precipitation trends without the variable of seasonality. 
-
-## Question 2: Is there an increase in precipitation by decade? 
-* We will first visually compare the number of significant precipitation events for each decade, then run a t-test to determine if there is a significant difference in number of significant precipitation events comparing decades. 
-
-
 
 \newpage
 
