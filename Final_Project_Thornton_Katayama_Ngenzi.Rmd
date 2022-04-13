@@ -39,9 +39,9 @@ Null Hypothesis 2: There is no significant change in 1-year/24h precipitation ev
 \newpage
 
 # Dataset Information
-Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data shows historical precipitation data from Beaufort, NC for the years 1980 to 2016. 
+Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data shows historical precipitation data from Beaufort, NC for the years 1980 to 2016. This dataset was chosen because it is the most complete and consistent precipitation dataset that we could find. 
 
-"Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches. This means that in 24h the probability of it raining 3.66 inches should only happen once a year. These events are considered large storm events.
+"Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches for Beaufort, NC. This means that in 24h the probability of it raining 3.66 inches or more should only happen once a year. These events are considered large storm events.
 
 
 ```{r}
@@ -88,11 +88,17 @@ names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
 Beaufort_RAW$Date<-as.Date(Beaufort_RAW$Date, "%Y-%m-%d") 
 
 # Set your ggplot theme
-Theme <- theme_classic(base_size = 7) +
+Theme <- theme_classic(base_size = 9) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "right")
 theme_set(Theme)
 
+#Save processed Raw to processed folder
+write.csv(Beaufort_RAW, row.names = FALSE, 
+          file = "./Data/Processed/Beaufort_Processed.csv")
+
+#Read in processed data
+Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 ```
 
 # Create a Map of Beaufort for Visualization Aid
@@ -137,26 +143,19 @@ mapview(NC_data, alpha.regions = 0.2) +
 ggplot()+
   geom_sf(data = NC_data, aes(), alpha=0.2)+
   geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
-  geom_sf(data= Beaufort_Town, col = "red")
+  geom_sf(data= Beaufort_Town, col = "red")+
+  ggtitle("Beaufort, NC")
   
 ```
 
-# Wrangle Data for analysis
+# Wrangle Data for Analysis
 ```{r clean}
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
-Beaufort_Clean<- Beaufort_RAW%>%
+Beaufort_Clean<- Beaufort_Processed%>%
   group_by(year,month)%>%
    summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
              sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
-
-#Plot precipitation over years to see general trend (Raw dataset). Warning: Plot zoomed in to show trend more clearly; some outliers are not included.
-ggplot(Beaufort_RAW, aes(x=Date, y=Mean_Precip_mm))+
-  geom_line()+
-  ylim(c(0,80))+
-  labs(y= "Mean Daily Precip (mm)")+
-  geom_smooth(method=lm)
-  
 
 #Plot total monthly precipitation data to see rough trend (Clean dataset)
 ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
@@ -169,7 +168,7 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
 ```{r early}
 #This dataset has a 10 year time frame with precipitation in inches (1997-01-01 to 2006-12-31) and significant 1-year/24hr precipitation events in magnitude and number of significant precipitation events
 
-Beaufort_early<- Beaufort_RAW%>%
+Beaufort_early<- Beaufort_Processed%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
@@ -179,7 +178,7 @@ Beaufort_early<- Beaufort_RAW%>%
   drop_na()
   
 #Create a Beaufort early dataset, where non-significant 1-year/24h precipitation events were classified as NA.
-Beaufort_earlyNo0Precip<-Beaufort_RAW%>%
+Beaufort_earlyNo0Precip<-Beaufort_Processed%>%
   mutate(PrecipInches=Mean_Precip_mm*0.0394)%>%
   filter(Date >("1996-12-31"), Date < ("2007-01-01")) %>% 
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,NA),
@@ -216,7 +215,7 @@ Plot_early_overall
 ```{r late}
 #This dataset has a 10 year time frame, precipitation in inches (2007-01-01 to 2016-12-30) and significant 1-year/24hr precipitation events in magnitude and number of significant precipitation events
 
-Beaufort_Late<- Beaufort_RAW%>%
+Beaufort_Late<- Beaufort_Processed%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date > "2006-12-31")%>%
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,0),
@@ -226,7 +225,7 @@ Beaufort_Late<- Beaufort_RAW%>%
   drop_na()
 
 #Create a Beaufort late dataset, where non significant 1-year/24hr precipitation events were classified as NA.
-Beaufort_LateNo0Precip<- Beaufort_RAW%>%
+Beaufort_LateNo0Precip<- Beaufort_Processed%>%
   mutate(PrecipInches= Mean_Precip_mm*0.0394)%>%
   filter(Date > "2006-12-31")%>%
   mutate(sigPrecip= ifelse(PrecipInches>3.66,PrecipInches,NA),
@@ -259,7 +258,14 @@ LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year
 LateTable
 ```
 
-# Create a plot to combine the 1-year/24 hour events for each decade
+# Compare overall precipitation for each decade
+
+```{r echo=FALSE, fig.align= "center"}
+
+grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
+```
+
+# Compare the 1-year/24 hour events for each decade
 ```{r combined one year storms}
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
@@ -271,11 +277,11 @@ grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 Perform t-test and seasonal Mann-Kendall for overall dataset
 ```{r t-test Overall& Seasonal Mann-Kendall Ovearall}
 
-t.test(Beaufort_RAW$Mean_Precip_mm)
+t.test(Beaufort_Processed$Mean_Precip_mm)
 #significant <- This means that there is a significant change in precipitation over the years 1980 to 2016
 
-#Using Seasonal Mann-Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t-test. That being said, both tests were both run.
-Beaufort_RAW_2<-Beaufort_RAW
+#Using Seasonal Mann-Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t-test. That being said, both tests were run.
+Beaufort_RAW_2<-Beaufort_Processed
 
 #Used linear interpolation to fill missing data for precipitation data.
 Beaufort_RAW_2$Mean_Precip_mm<-
@@ -333,3 +339,10 @@ It will also be interested to use a longer period of data (more than 30 years)
 to see if there is any new or different trends we could not capture with our data. 
 
 Large storm events are important to track in future climate change studies. 
+
+\newpage
+
+# Resources
+
+__NOAA Website__
+https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_map_cont.html?bkmrk=nc
