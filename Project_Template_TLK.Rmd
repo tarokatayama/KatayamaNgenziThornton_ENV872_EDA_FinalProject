@@ -8,7 +8,7 @@ output:
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
-subtitle: Web address for GitHub repository
+subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git
 geometry: margin=2.54cm
 fontsize: 12pt
 mainfont: Times New Roman
@@ -319,8 +319,8 @@ pacf(Beaufort_TS)
 
 # Summary and Conclusions
 
+After careful analysis, it has been concluded that there is a significant increase in precipitation from 1980 to 2016 in Beaufort, NC. When comparing decade 1 (1997 to 2006) to decade 2 (2007 to 2016) there was no significant increase in precipitation.That being said, when looking at significant 1-year/24hr storm events with a threshold of 3.66 inches there was a significant increase from decade 1 to decade 2. 
 
-\newpage
+While there isn't enough information to draw conclusions based on precipitation alone, our prediction is climate change as the driver behind the increase in 1-year/24hr storm events between decades. 
 
-# References
-<add references here if relevant, otherwise delete this section> 
+Large storm events are important to track in future climate change studies. 
