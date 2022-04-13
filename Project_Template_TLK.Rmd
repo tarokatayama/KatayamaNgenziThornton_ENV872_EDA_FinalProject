@@ -20,8 +20,6 @@ editor_options:
 \newpage
 \tableofcontents
 \newpage
-\DataWrangling
-\newpage
 \listoffigures 
 \newpage
 
@@ -54,7 +52,7 @@ Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503
 # Exploratory Analysis
 
 Load all packages and get the working directory
-```{r setup echo=T, results='hide'}
+```{r setup, echo=T, results='hide'}
 
 # Set your working directory
 getwd()
@@ -320,9 +318,7 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 
 After careful analysis, it has been concluded that there is a significant increase in precipitation from 1980 to 2016 in Beaufort, NC. When comparing decade 1 (1997 to 2006) to decade 2 (2007 to 2016) there was no significant increase in precipitation.That being said, when looking at significant 1-year/24hr storm events with a threshold of 3.66 inches there was a significant increase from decade 1 to decade 2. 
 
-While there isn't enough information to draw conclusions based on precipitation alone, our prediction is climate change as the driver behind the increase in 1-year/24hr storm events between decades. 
-It will also be interested to use a longer period of data (more than 30 years) 
-to see if there is any new or different trends we could not capture with our data. 
+While there isn't enough information to draw conclusions based on precipitation alone, our prediction is climate change as the driver behind the increase in 1-year/24hr storm events between decades. This project shows the importance of tracking large storm events in future climate change studies. 
 
-Large storm events are important to track in future climate change studies. 
-
+It would also be interesting to use a longer period of data (more than 30 years) 
+to see if there is any new or different trends that could not be captured with our data. 
