@@ -40,7 +40,7 @@ Null Hypothesis 2: There is no significant change in 1-year/24h precipitation ev
 # Dataset Information
 Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data shows historical precipitation data from Beaufort, NC for the years 1980 to 2016. 
 
-"Significant Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches. This means that in 24h the probability of it raining 3.66 inches should only happen once a year. These events are considered large storm events.
+"Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches. This means that in 24h the probability of it raining 3.66 inches should only happen once a year. These events are considered large storm events.
 
 
 ```{r}
