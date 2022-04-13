@@ -43,9 +43,6 @@ Data was originally attained online from DAYMET for a Hydrology assignment durin
 
 "Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches for Beaufort, NC. This means that in 24h the probability of it raining 3.66 inches or more should only happen once a year. These events are considered large storm events.
 
-__NOAA Website__
-https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_map_cont.html?bkmrk=nc
-
 
 ```{r}
 # Load your datasets
@@ -336,3 +333,10 @@ It will also be interested to use a longer period of data (more than 30 years)
 to see if there is any new or different trends we could not capture with our data. 
 
 Large storm events are important to track in future climate change studies. 
+
+\newpage
+
+# Resources
+
+__NOAA Website__
+https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_map_cont.html?bkmrk=nc
