@@ -41,7 +41,10 @@ Null Hypothesis 2: There is no significant change in 1-year/24h precipitation ev
 # Dataset Information
 Data was originally attained online from DAYMET for a Hydrology assignment during Fall Semester. Since then, DAYMET has been taken down, so the excel sheet from class was used. The data shows historical precipitation data from Beaufort, NC for the years 1980 to 2016. 
 
-"Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches. This means that in 24h the probability of it raining 3.66 inches should only happen once a year. These events are considered large storm events.
+"Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches for Beaufort, NC. This means that in 24h the probability of it raining 3.66 inches or more should only happen once a year. These events are considered large storm events.
+
+__NOAA Website__
+https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_map_cont.html?bkmrk=nc
 
 
 ```{r}
@@ -137,11 +140,12 @@ mapview(NC_data, alpha.regions = 0.2) +
 ggplot()+
   geom_sf(data = NC_data, aes(), alpha=0.2)+
   geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
-  geom_sf(data= Beaufort_Town, col = "red")
+  geom_sf(data= Beaufort_Town, col = "red")+
+  ggtitle("Beaufort, NC")
   
 ```
 
-# Wrangle Data for analysis
+# Wrangle Data for Analysis
 ```{r clean}
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
 Beaufort_Clean<- Beaufort_RAW%>%
@@ -149,14 +153,6 @@ Beaufort_Clean<- Beaufort_RAW%>%
    summarise(meanmonthlyprecip= mean(Mean_Precip_mm),
              sumMonthlyPrecip= sum(Mean_Precip_mm))%>%
   mutate(Date= my(paste0(month,"-", year)))
-
-#Plot precipitation over years to see general trend (Raw dataset). Warning: Plot zoomed in to show trend more clearly; some outliers are not included.
-ggplot(Beaufort_RAW, aes(x=Date, y=Mean_Precip_mm))+
-  geom_line()+
-  ylim(c(0,80))+
-  labs(y= "Mean Daily Precip (mm)")+
-  geom_smooth(method=lm)
-  
 
 #Plot total monthly precipitation data to see rough trend (Clean dataset)
 ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
