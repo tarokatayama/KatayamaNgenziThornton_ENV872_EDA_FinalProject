@@ -1,16 +1,18 @@
 ---
-output: 
+title: "Precipitation Change in Beaufort, NC"
+author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
+output:
+  html_document:
+    df_print: paged
   pdf_document:
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
+subtitle: Web address for GitHub repository
 geometry: margin=2.54cm
-title: "Precipitation Change in Beaufort, NC"
-subtitle: "Web address for GitHub repository"
-author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 fontsize: 12pt
 mainfont: Times New Roman
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -73,6 +75,10 @@ ggplot(Beaufort_RAW, aes(x= Date, y= Mean_Precip_mm))+
   geom_point()+
   geom_smooth()+
   labs(y= "Mean Precipitation (mm)", x= "Date")
+```
+```{r}
+
+
 ```
 
 ```{r Map of Beaufort}
@@ -273,22 +279,13 @@ t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
 #significant!<- There are more statistically significant 1 year precipitation events in later decade. 
 ```
 
-Let's inspect the ACF and PACF plots. Notice the ACF plot has repeating positive and negative components (indicating seasonality), whereas the PACF decays over time without a clear seasonal structure.
+
 ```{r}
+# There is not autocorrelation, although the first 3 show a statistically significant autocorrelation trend of precipitation.
+acf(Beaufort_TS) 
 
-acf(Late_full_ts) 
-pacf(Late_full_ts) 
-
-acf(Late_sig_ts)
-pacf(Late_sig_ts)
-
-acf(Early_full_ts)
-pacf(Early_full_ts)
-
-acf(Early_sig_ts)
-pacf(Early_sig_ts)
-
-
+pacf(Beaufort_TS) 
+#No autocovariance, despite the first 3 lag time are statistically significant while others are not. And the second one is negative partial autocorrelation. 
 ```
 
 
