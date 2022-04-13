@@ -51,11 +51,14 @@ Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503
 
 # Exploratory Analysis
 
-Load all packages and get the working directory
-```{r setup, echo=T, results='hide'}
-
-# Set your working directory
+```{r wd, results='hide'}
+# Get your working directory
 getwd()
+```
+
+
+Load all packages and get the working directory
+```{r setup, message=FALSE, warning=FALSE}
 
 # Load your packages
 #install.packages(webshot)
@@ -140,7 +143,7 @@ ggplot()+
 ```
 
 # Wrangle Data for analysis
-```{r clean, warning=FALSE}
+```{r clean, message=FALSE, warning=FALSE}
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
