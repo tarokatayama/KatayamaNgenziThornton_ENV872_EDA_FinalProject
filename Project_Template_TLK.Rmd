@@ -6,7 +6,7 @@ output:
     number_sections: yes
 geometry: margin=2.54cm
 title: "Precipitation Change in Beaufort, NC"
-subtitle: "Web address for GitHub repository"
+subtitle: "https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git"
 author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 fontsize: 12pt
 mainfont: Times New Roman
@@ -17,21 +17,10 @@ editor_options:
 \newpage
 \tableofcontents 
 \newpage
-\listoftables 
+\DataWrangling
 \newpage
 \listoffigures 
 \newpage
-
-
-Initial steps
-* get data
-* Wrangle data
-* graph data to see what we're working with
-* try a seasonal Mann-kendall test
-* divide decades and see if there's a statistical significant difference 
-* Optional: map of three schools in NC
-* Make presentation
-
 
 ```{r setup, include=FALSE}
 
