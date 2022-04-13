@@ -2,13 +2,13 @@
 title: "Precipitation Change in Beaufort, NC"
 author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 output:
+  html_document:
+    df_print: paged
   pdf_document:
     df_print: paged
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
-  html_document:
-    df_print: paged
 subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git
 geometry: margin=2.54cm
 fontsize: 12pt
@@ -27,13 +27,13 @@ editor_options:
 
 # Rationale and Research Questions
 
-Question 1: Has there been a significant increase in precipitation in Beaufort, NC from 1980 to 2016? 
+**Question 1:** Has there been a significant increase in precipitation in Beaufort, NC from 1980 to 2016? 
 
-Question 2: Has there been a significant increase in 1-year/24h precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
+**Question 2:** Has there been a significant increase in 1-year/24h precipitation event in Beaufort, NC from decade to decade (1997 to 2006 and 2007 to 2016)? 
 
-Null Hypothesis 1: There is no significant change in precipitation from 1980 to 2016.
+**Null Hypothesis 1:** There is no significant change in precipitation from 1980 to 2016.
 
-Null Hypothesis 2: There is no significant change in 1-year/24h precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
+**Null Hypothesis 2:** There is no significant change in 1-year/24h precipitation events from decade to decade (1997 to 2006 and 2007 to 2016). 
 
 
 \newpage
@@ -54,7 +54,7 @@ Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503
 # Exploratory Analysis
 
 Load all packages and get the working directory
-```{r setup}
+```{r setup echo=T, results='hide'}
 
 # Set your working directory
 getwd()
@@ -142,7 +142,7 @@ ggplot()+
 ```
 
 # Wrangle Data for analysis
-```{r clean}
+```{r clean, warning=FALSE}
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
 Beaufort_Clean<- Beaufort_RAW%>%
   group_by(year,month)%>%
@@ -194,7 +194,7 @@ Beaufort_early_summary<- Beaufort_early%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
 #Create a table of number of 1-year/24hr events per year.
-EarlyTable<- kable(Beaufort_early_summary, caption = "1-year/24hr Events Over Year")
+EarlyTable<- kable(Beaufort_early_summary, caption = "1-year/24hr Events Over Year", col.names = c("Year", "1-year/24hr event"))
 EarlyTable
 
 #Create a figure with number and magnitude of significant events per year.
@@ -255,7 +255,7 @@ Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
 Plot_late_overall
 
 #Create a table of number of significant 1-year/24hr events per year.
-LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year")
+LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year", col.names = c("Year", "1-year/24hr event"))
 LateTable
 ```
 
@@ -325,3 +325,4 @@ It will also be interested to use a longer period of data (more than 30 years)
 to see if there is any new or different trends we could not capture with our data. 
 
 Large storm events are important to track in future climate change studies. 
+
