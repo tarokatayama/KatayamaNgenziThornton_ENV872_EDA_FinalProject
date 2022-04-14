@@ -1,29 +1,22 @@
 ---
-title: "Precipitation Change in Beaufort, NC"
-author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
-output:
+output: 
   pdf_document:
-    df_print: paged
+    keep_md: yes
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
-  html_document:
-   df_print: paged
-   lof: true
-   lot: true
-   toc: true
-subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git
 geometry: margin=2.54cm
+title: "Precipitation Change in Beaufort, NC"
+subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git
+author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 fontsize: 12pt
 mainfont: Times New Roman
-editor_options:
-  chunk_output_type: console
 ---
 
 \newpage
-\tableofcontents
+\tableofcontents 
 \newpage
-\listoftables
+\listoftables 
 \newpage
 \listoffigures 
 \newpage
@@ -65,9 +58,9 @@ library(webshot)
 library(tidyverse)
 library(dplyr)
 library(lubridate)
-library(mapview)
-mapviewOptions(fgb = FALSE)
-library(sf)
+#library(mapview)
+#mapviewOptions(fgb = FALSE)
+#library(sf)
 library(knitr)
 library(Kendall)
 library(zoo)
@@ -125,45 +118,45 @@ Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 ```{r Map of Beaufort}
 
 #Create a Beaufort point using long and lat 
-mapviewOptions(fgb=FALSE)
+#mapviewOptions(fgb=FALSE)
 
-Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
+#Beaufort_pt <-  st_point(c(-76.6515, 34.7192))
 
 #Convert the the two points into spatial data
-Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
+#Beaufort_Pol <- st_sfc(Beaufort_pt, crs = 4326)
 
 #view the map
-mapview(Beaufort_Pol)
+#mapview(Beaufort_Pol)
 
 #repeat the steps for the next layer
-Beaufort_Town <- st_as_sf(Beaufort_Pol)
+#Beaufort_Town <- st_as_sf(Beaufort_Pol)
 
-mapview(Beaufort_Town, col.regions = "red")
+#mapview(Beaufort_Town, col.regions = "red")
 
 # Load NC counties info 
-NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
-  filter(STATEFP == 37)
+#NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
+ # filter(STATEFP == 37)
 
 # Visualize MC data
-mapview(NC_data)
+#mapview(NC_data)
 
 # Filter Beaufort county and map it 
-Beaufort_County <- NC_data %>% 
-  filter(NAME %in% "Carteret")
+#Beaufort_County <- NC_data %>% 
+  #filter(NAME %in% "Carteret")
 
-mapview(Beaufort_County, col.regions = "orange")
+#mapview(Beaufort_County, col.regions = "orange")
 
 # Combine all map 
-mapview(NC_data, alpha.regions = 0.2) +
-  mapview(Beaufort_County, col.regions = "orange") +
-  mapview(Beaufort_Town, col.regions = "red")
+#mapview(NC_data, alpha.regions = 0.2) +
+  #mapview(Beaufort_County, col.regions = "orange") +
+  #mapview(Beaufort_Town, col.regions = "red")
 
 #plot in ggplot to put in presentation 
-ggplot()+
-  geom_sf(data = NC_data, aes(), alpha=0.2)+
-  geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
-  geom_sf(data= Beaufort_Town, col = "red")+
-  ggtitle("Beaufort, NC")
+#ggplot()+
+  #geom_sf(data = NC_data, aes(), alpha=0.2)+
+  #geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
+  #geom_sf(data= Beaufort_Town, col = "red")+
+  #ggtitle("Beaufort, NC")
   
 ```
 
@@ -179,7 +172,7 @@ Beaufort_Clean<- Beaufort_Processed%>%
 #Plot total monthly precipitation data to see rough trend (Clean dataset)
 ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_line()+
-  labs(y= "Sum Monthly Precip. (mm)")+
+  labs(y= "Sum Monthly Precip. (mm)", caption = "Total Monthly Precipitation")+
   geom_smooth(method = lm) 
 ```
 
@@ -219,7 +212,7 @@ EarlyTable
 Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
-  labs(y="1-year/24hr storm events (in)", x= "Date") +
+  labs(y="1-year/24hr storm events (in)", x= "Date", caption = "1-year/24hr storm events (in)") +
   ggtitle("Early Signficant Events")
 Plot_early_sig
 
@@ -292,7 +285,7 @@ grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 # Analysis
 
 Perform t-test and seasonal Mann-Kendall for overall dataset
-```{r t-test Overall& Seasonal Mann-Kendall Ovearall}
+```{r t-test Overall and Seasonal Mann-Kendall Ovearall}
 
 t.test(Beaufort_Processed$Mean_Precip_mm)
 #significant (p-value=2.2e-16) <- This means that there is a significant change in precipitation over the years 1980 to 2016
