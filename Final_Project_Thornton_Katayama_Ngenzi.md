@@ -1,6 +1,7 @@
 ---
 output: 
   pdf_document:
+    keep_md: yes
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
@@ -38,19 +39,21 @@ Data was originally attained online from DAYMET for a Hydrology assignment durin
 "Significant 1-year/24hr Precipitation Events" are considered 1 year/24h events using the NOAA threshold of 3.66 inches for Beaufort, NC. This means that in 24h the probability of it raining 3.66 inches or more should only happen once a year. These events are considered large storm events.
 
 Get the working directory
-```{r wd, results='hide'}
+
+```r
 # Get your working directory
 getwd()
 ```
 
-```{r}
+
+```r
 # Load your datasets
 Beaufort_RAW<-read.csv("./Data/Raw/Beaufort_precip_1980-present_HUC_030203010503_dayMet_split-dates-columns.csv", stringsAsFactors = TRUE)
 ```
 
 Load all packages
-```{r setup, message=FALSE, warning=FALSE}
 
+```r
 # Load your packages
 #install.packages(webshot)
 library(webshot)
@@ -65,7 +68,6 @@ library(Kendall)
 library(zoo)
 library(gridExtra)
 options(scipen = 4) # limit number of digits 
-
 ```
 
 \newpage
@@ -73,25 +75,99 @@ options(scipen = 4) # limit number of digits
 # Exploratory Analysis
 
 **Initial Wrangling**
-```{r setup2}
+
+```r
 #Structure of the dataset
 str(Beaufort_RAW)
+```
 
+```
+## 'data.frame':	13514 obs. of  5 variables:
+##  $ Date                                         : Factor w/ 13514 levels "1980-01-01","1980-01-02",..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Area.Weighted.Mean.Precipitation..mm.per.day.: num  0 0 0 12 9 0 0 7 9 0 ...
+##  $ year                                         : int  1980 1980 1980 1980 1980 1980 1980 1980 1980 1980 ...
+##  $ month                                        : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ day_of_month                                 : int  1 2 3 4 5 6 7 8 9 10 ...
+```
+
+```r
 #Head of the dataset
 head(Beaufort_RAW)
+```
 
+```
+##         Date Area.Weighted.Mean.Precipitation..mm.per.day. year month
+## 1 1980-01-01                                             0 1980     1
+## 2 1980-01-02                                             0 1980     1
+## 3 1980-01-03                                             0 1980     1
+## 4 1980-01-04                                            12 1980     1
+## 5 1980-01-05                                             9 1980     1
+## 6 1980-01-06                                             0 1980     1
+##   day_of_month
+## 1            1
+## 2            2
+## 3            3
+## 4            4
+## 5            5
+## 6            6
+```
+
+```r
 #Dimension of dataset
 dim(Beaufort_RAW)
+```
 
+```
+## [1] 13514     5
+```
+
+```r
 #Class of the dataset
 class(Beaufort_RAW)
+```
 
+```
+## [1] "data.frame"
+```
+
+```r
 # Column names of the dataset
 colnames(Beaufort_RAW)
+```
 
+```
+## [1] "Date"                                         
+## [2] "Area.Weighted.Mean.Precipitation..mm.per.day."
+## [3] "year"                                         
+## [4] "month"                                        
+## [5] "day_of_month"
+```
+
+```r
 #summarize the data
 summary(Beaufort_RAW)
+```
 
+```
+##          Date       Area.Weighted.Mean.Precipitation..mm.per.day.
+##  1980-01-01:    1   Min.   :  0.00                               
+##  1980-01-02:    1   1st Qu.:  0.00                               
+##  1980-01-03:    1   Median :  0.00                               
+##  1980-01-04:    1   Mean   :  4.14                               
+##  1980-01-05:    1   3rd Qu.:  2.00                               
+##  1980-01-06:    1   Max.   :195.00                               
+##  (Other)   :13508   NA's   :9                                    
+##       year          month         day_of_month  
+##  Min.   :1980   Min.   : 1.000   Min.   : 1.00  
+##  1st Qu.:1989   1st Qu.: 4.000   1st Qu.: 8.00  
+##  Median :1998   Median : 7.000   Median :16.00  
+##  Mean   :1998   Mean   : 6.522   Mean   :15.73  
+##  3rd Qu.:2007   3rd Qu.:10.000   3rd Qu.:23.00  
+##  Max.   :2016   Max.   :12.000   Max.   :31.00  
+## 
+```
+
+```r
 # Rename columns to logical names
 names(Beaufort_RAW)[1] <- "Date"
 names(Beaufort_RAW)[2] <- "Mean_Precip_mm"
@@ -114,8 +190,8 @@ Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 ```
 
 **Create a Map of Beaufort for Visualization Aid**
-```{r Map of Beaufort}
 
+```r
 #Create a Beaufort point using long and lat 
 #mapviewOptions(fgb=FALSE)
 
@@ -156,11 +232,11 @@ Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
   #geom_sf(data = Beaufort_County, fill= "orange", alpha = 0.7)+
   #geom_sf(data= Beaufort_Town, col = "red")+
   #ggtitle("Beaufort, NC")
-  
 ```
 
 # Wrangle Data for Analysis
-```{r clean, message=FALSE, warning=FALSE, fig.cap="Total Monthly Precipitation"}
+
+```r
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
 Beaufort_Clean<- Beaufort_Processed%>%
   group_by(year,month)%>%
@@ -175,8 +251,11 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_smooth(method = lm) 
 ```
 
+![Total Monthly Precipitation](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/clean-1.pdf) 
+
 **Create a dataset for the early decade (1997-2006)**
-```{r early}
+
+```r
 #This dataset has a 10 year time frame with precipitation in inches (1997-01-01 to 2006-12-31) and significant 1-year/24hr precipitation events in magnitude and number of significant precipitation events
 
 Beaufort_early<- Beaufort_Processed%>%
@@ -210,7 +289,25 @@ EarlyTable<- kable(Beaufort_early_summary,
 EarlyTable
 ```
 
-```{r early plot 1, fig.cap="1 year 24 hr storm events (early decade)"}
+
+
+Table: 1-year/24hr Events Over Year
+
+| Year| 1-year/24hr event|
+|----:|-----------------:|
+| 1997|                 0|
+| 1998|                 1|
+| 1999|                 1|
+| 2000|                 0|
+| 2001|                 0|
+| 2002|                 0|
+| 2003|                 0|
+| 2004|                 0|
+| 2005|                 1|
+| 2006|                 1|
+
+
+```r
 #Create a figure with number and magnitude of significant events per year.
 Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, 
                          aes(x=Date , y=sigPrecip))+
@@ -222,7 +319,10 @@ Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip,
 Plot_early_sig
 ```
 
-```{r early plot 2, fig.cap="Overall Precipitation (early decade)"}
+![1 year 24 hr storm events (early decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 1-1.pdf) 
+
+
+```r
 #Create a figure showing the overall precipitation for the early decade
 Plot_early_overall <- ggplot(Beaufort_early, 
                              aes(x=Date , y=PrecipInches))+
@@ -231,8 +331,11 @@ Plot_early_overall <- ggplot(Beaufort_early,
 Plot_early_overall
 ```
 
+![Overall Precipitation (early decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 2-1.pdf) 
+
 **Create a dataset for the late decade (2007-2016)**
-```{r late}
+
+```r
 #This dataset has a 10 year time frame, precipitation in inches (2007-01-01 to 2016-12-30) and significant 1-year/24hr precipitation events in magnitude and number of significant precipitation events
 
 Beaufort_Late<- Beaufort_Processed%>%
@@ -260,7 +363,8 @@ Beaufort_late_summary<- Beaufort_Late%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 ```
 
-```{r late plot 1, fig.cap="1 year 24 hr storm events (late decade)"}
+
+```r
 #Create a figure with number and magnitude of significant 1-year/24hr events per year.
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, 
                         aes(x=Date , y=sigPrecip))+
@@ -271,13 +375,20 @@ Plot_late_sig <- ggplot(Beaufort_LateNo0Precip,
 Plot_late_sig
 ```
 
-```{r late plot 2, fig.cap="Overall Precipitation (late decade)"}
+![1 year 24 hr storm events (late decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 1-1.pdf) 
+
+
+```r
 #Create a figure showing the overall precipitation for the late decade
 Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
   geom_point()+
   labs(y="Precipitation (in)", x= "Date")
 Plot_late_overall
+```
 
+![Overall Precipitation (late decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 2-1.pdf) 
+
+```r
 #Create a table of number of significant 1-year/24hr events per year.
 LateTable<- kable(Beaufort_late_summary, 
                   caption = "Significant Events Over Year", 
@@ -285,24 +396,78 @@ LateTable<- kable(Beaufort_late_summary,
 LateTable
 ```
 
+
+
+Table: Significant Events Over Year
+
+| Year| 1-year/24hr event|
+|----:|-----------------:|
+| 2007|                 2|
+| 2008|                 1|
+| 2009|                 2|
+| 2010|                 2|
+| 2011|                 2|
+| 2012|                 0|
+| 2013|                 1|
+| 2014|                 2|
+| 2015|                 3|
+| 2016|                 2|
+
 **Compare overall precipitation for each decade**
-```{r overall grid, fig.align= "center", fig.cap="Overall Precipitation by decade"}
+
+```r
 grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
 ```
 
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/overall grid-1} 
+
+}
+
+\caption{Overall Precipitation by decade}\label{fig:overall grid}
+\end{figure}
+
 **Compare the 1-year/24 hour events for each decade**
-```{r combined one year storms, fig.align="center", fig.cap="1 year 24 hr storm event decade comparison"}
+
+```r
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
+
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/combined one year storms-1} 
+
+}
+
+\caption{1 year 24 hr storm event decade comparison}\label{fig:combined one year storms}
+\end{figure}
 
 \newpage 
 
 # Analysis
 
 Perform t-test and seasonal Mann-Kendall for overall dataset
-```{r t-test Overall and Seasonal Mann-Kendall Ovearall, fig.cap="Decomposed time series"}
 
+```r
 t.test(Beaufort_Processed$Mean_Precip_mm)
+```
+
+```
+## 
+## 	One Sample t-test
+## 
+## data:  Beaufort_Processed$Mean_Precip_mm
+## t = 43.492, df = 13504, p-value < 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  3.953508 4.326684
+## sample estimates:
+## mean of x 
+##  4.140096
+```
+
+```r
 #significant (p-value=2.2e-16) <- This means that there is a significant change in precipitation over the years 1980 to 2016
 
 #Using Seasonal Mann-Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t-test. That being said, both tests were run.
@@ -325,22 +490,67 @@ Beaufort_TS<- ts(Beaufort_RAW_2$Mean_Precip_mm,
 #Decomposed the time series to see components.
 Beaufort_decompose<- stl(Beaufort_TS, s.window = "periodic")
 plot(Beaufort_decompose)
+```
 
+![Decomposed time series](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/t-test Overall and Seasonal Mann-Kendall Ovearall-1.pdf) 
+
+```r
 #Ran a seasonal Mann Kendall to see if there is a change in precipitation over the time of the data frame. Used seasonal Mann-Kendall to exclude seasonality of precipitation. 
 Beaufort.trend<-Kendall::SeasonalMannKendall(Beaufort_TS)
 Beaufort.trend
+```
+
+```
+## tau = 0.0189, 2-sided pvalue =0.0056612
+```
+
+```r
 #Significant! (p-value = 0.0056612) <- This means that when you exclude seasonality there is still a significant change in precipitation from 1980 to 2016
 ```
 
 **T-test was run to compare the two decades**
-```{r t-test for decades}
 
+```r
 #Here we are looking to see if there is a change in precipitation amount comparing two decades (1999-2006) & (2007-2016)
 t.test(Beaufort_early$PrecipInches, Beaufort_Late$PrecipInches)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  Beaufort_early$PrecipInches and Beaufort_Late$PrecipInches
+## t = -0.64906, df = 7133.8, p-value = 0.5163
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.02812072  0.01413102
+## sample estimates:
+## mean of x mean of y 
+## 0.1627598 0.1697546
+```
+
+```r
 #not significant (p-value=0.5163)<- meaning precipitation amount not significantly different over the two decades
 
 #Here we compared the significant 1-year/24hr precipitation events for the two decades (1999-2006) & (2007-2016).
 t.test(Beaufort_early$sigPrecip, Beaufort_Late$sigPrecip)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  Beaufort_early$sigPrecip and Beaufort_Late$sigPrecip
+## t = -2.7068, df = 5451.7, p-value = 0.006815
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.028681849 -0.004586864
+## sample estimates:
+##   mean of x   mean of y 
+## 0.005537589 0.022171945
+```
+
+```r
 #significant! (p-value=0.006815) <- There are more statistically significant 1 year precipitation events in later decade. 
 ```
 
