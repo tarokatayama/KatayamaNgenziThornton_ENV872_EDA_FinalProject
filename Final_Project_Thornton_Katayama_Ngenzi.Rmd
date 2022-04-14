@@ -82,14 +82,13 @@ options(scipen = 4) # limit number of digits
 
 Initial Wrangling
 ```{r setup2}
-#look at the structure
+#Structure of the dataset
 str(Beaufort_RAW)
 
-<<<<<<< HEAD
-#summarize the dataset
-summary(Beaufort_RAW)
+#Head of the dataset
+head(Beaufort_RAW)
 
-#dimension of dataset
+#Dimension of dataset
 dim(Beaufort_RAW)
 
 #Class of the dataset
@@ -97,13 +96,9 @@ class(Beaufort_RAW)
 
 # Column names of the dataset
 colnames(Beaufort_RAW)
-=======
+
 #summarize the data
 summary(Beaufort_RAW)
-
-#check dimensions
-dim(Beaufort_RAW)
->>>>>>> 4ec3be52ac9078d6381175c6271dd8b5171dfd21
 
 # Rename columns to logical names
 names(Beaufort_RAW)[1] <- "Date"
