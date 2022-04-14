@@ -2,16 +2,16 @@
 title: "Precipitation Change in Beaufort, NC"
 author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 output:
-  html_document:
-   df_print: paged
-   lof: true
-   lot: true
-   toc: true
   pdf_document:
     df_print: paged
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
+  html_document:
+   df_print: paged
+   lof: true
+   lot: true
+   toc: true
 subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git
 geometry: margin=2.54cm
 fontsize: 12pt
