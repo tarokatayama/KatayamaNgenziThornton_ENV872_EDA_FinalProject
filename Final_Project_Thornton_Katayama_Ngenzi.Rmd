@@ -1,13 +1,13 @@
 ---
-output: 
+title: "Precipitation Change in Beaufort, NC"
+author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
+output:
   pdf_document:
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
-geometry: margin=2.54cm
-title: "Precipitation Change in Beaufort, NC"
 subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git
-author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
+geometry: margin=2.54cm
 fontsize: 12pt
 mainfont: Times New Roman
 editor_options:
@@ -136,7 +136,7 @@ Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 
 # Load NC counties info 
 #NC_data <- st_read("./Data/Spatial/cb_2018_us_county_20m.shp") %>% 
- # filter(STATEFP == 37)
+  #filter(STATEFP == 37)
 
 # Visualize MC data
 #mapview(NC_data)
@@ -160,7 +160,7 @@ Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
   #ggtitle("Beaufort, NC")
   
 ```
-
+\newpage
 # Wrangle Data for Analysis
 ```{r clean, message=FALSE, warning=FALSE, fig.cap="Total Monthly Precipitation"}
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
@@ -204,7 +204,9 @@ Beaufort_earlyNo0Precip<-Beaufort_Processed%>%
 Beaufort_early_summary<- Beaufort_early%>%
   group_by(year)%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
-
+```
+\newpage
+```{r}
 #Create a table of number of 1-year/24hr events per year.
 EarlyTable<- kable(Beaufort_early_summary, 
                    caption = "1-year/24hr Events Over Year", 
@@ -213,21 +215,25 @@ EarlyTable
 ```
 \newpage
 
-```{r early plot 1, fig.cap="Sig events (early decade)"}
+```{r early plot 1, fig.align='center', fig.width= 6, fig.cap="Sig events (early decade)"}
 #Create a figure with number and magnitude of significant events per year.
 Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, 
                          aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
+   theme(axis.text.x=element_text(angle=60, hjust=1))+
   labs(y="1-year/24hr storm events (in)", x= "Date")
 Plot_early_sig
 ```
 \newpage
 ```{r early plot 2, fig.cap="Overall Precipitation (early decade)"}
 #Create a figure showing the overall precipitation for the early decade
+Beaufort_early$Date<- as.Date(Beaufort_early$Date, "%Y-%m-%d")
+
 Plot_early_overall <- ggplot(Beaufort_early, 
                              aes(x=Date , y=PrecipInches))+
   geom_point()+
+   scale_x_date(date_labels = ("%m-%Y"))+
   labs(y="Precipitation (in)", x= "Date")
 Plot_early_overall
 ```
@@ -261,22 +267,26 @@ Beaufort_late_summary<- Beaufort_Late%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 ```
 \newpage
-```{r late plot 1, fig.cap="Sig events (late decade)"}
+```{r late plot 1, fig.align='center', fig.cap= "Sig events (late decade)", fig.width= 6, echo=TRUE}
 #Create a figure with number and magnitude of significant 1-year/24hr events per year.
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, 
                         aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
   labs(y="1-year/24h storm events (in) ", x= "Date")
 Plot_late_sig
 ```
 \newpage
 
-```{r late plot 2, fig.cap="Overall Precipitation (late decade)"}
+```{r late plot 2, fig.align='center', fig.width=6, fig.cap="Overall Precipitation (late decade)"}
 #Create a figure showing the overall precipitation for the late decade
+Beaufort_Late$Date<- as.Date(Beaufort_Late$Date, "%Y-%m-%d")
+
 Plot_late_overall <- ggplot(Beaufort_Late, 
                             aes(x=Date , y=PrecipInches))+
   geom_point()+
+  scale_x_date(date_labels = ("%m-%Y"))+
   labs(y="Precipitation (in)", x= "Date")
 Plot_late_overall
 ```
