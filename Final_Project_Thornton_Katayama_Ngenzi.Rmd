@@ -66,6 +66,7 @@ library(knitr)
 library(Kendall)
 library(zoo)
 library(gridExtra)
+library(formatR)
 options(scipen = 4) # limit number of digits 
 
 ```
@@ -76,6 +77,7 @@ options(scipen = 4) # limit number of digits
 
 **Initial Wrangling**
 ```{r setup2}
+knitr::opts_chunk$set(tidy.opts=list(width=50), tidy=TRUE)
 #Structure of the dataset
 str(Beaufort_RAW)
 
@@ -173,7 +175,8 @@ Beaufort_Clean<- Beaufort_Processed%>%
 #Plot total monthly precipitation data to see rough trend (Clean dataset)
 ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_line()+
-  labs(y= "Sum Monthly Precip. (mm)", caption = "Total Monthly Precipitation")+
+  labs(y= "Sum Monthly Precip. (mm)", 
+       caption = "Total Monthly Precipitation")+
   geom_smooth(method = lm) 
 ```
 
@@ -208,9 +211,10 @@ Beaufort_early_summary<- Beaufort_early%>%
 \newpage
 ```{r}
 #Create a table of number of 1-year/24hr events per year.
-EarlyTable<- kable(Beaufort_early_summary, 
-                   caption = "1-year/24hr Events Over Year", 
-                   col.names = c("Year", "1-year/24hr event"))
+EarlyTable<- 
+  kable(Beaufort_early_summary, 
+        caption = "1-year/24hr Events Over Year", 
+        col.names = c("Year", "1-year/24hr event"))
 EarlyTable
 ```
 \newpage
@@ -294,9 +298,10 @@ Plot_late_overall
 
 ```{r late table}
 #Create a table of number of significant 1-year/24hr events per year.
-LateTable<- kable(Beaufort_late_summary, 
-                  caption = "Significant Events Over Year", 
-                  col.names = c("Year", "1-year/24hr event"))
+LateTable<- 
+  kable(Beaufort_late_summary, 
+        caption = "Significant Events Over Year", 
+        col.names = c("Year", "1-year/24hr event"))
 LateTable
 ```
 \newpage
