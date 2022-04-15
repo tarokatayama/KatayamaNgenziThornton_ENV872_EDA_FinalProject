@@ -478,6 +478,8 @@ Year & 1-year/24hr event \\
 \bottomrule
 \end{longtable}
 
+\newpage
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a figure with number and magnitude of significant events per year.}
@@ -485,18 +487,13 @@ Year & 1-year/24hr event \\
                          \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{, }
-       \AttributeTok{caption =} \StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Early Signficant Events"}\NormalTok{)}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_early\_sig}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
 \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 1-1.pdf}
-\caption{1 year 24 hr storm events (early decade)}
-\end{figure}
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -547,6 +544,8 @@ Year & 1-year/24hr event \\
 \end{Highlighting}
 \end{Shaded}
 
+\newpage
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a figure with number and magnitude of significant 1{-}year/24hr events per year.}
@@ -554,33 +553,27 @@ Year & 1-year/24hr event \\
                         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24h storm events (in) "}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Late Signficant Events"}\NormalTok{)}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24h storm events (in) "}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_late\_sig}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
 \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 1-1.pdf}
-\caption{1 year 24 hr storm events (late decade)}
-\end{figure}
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a figure showing the overall precipitation for the late decade}
-\NormalTok{Plot\_late\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_Late, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
+\NormalTok{Plot\_late\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_Late, }
+                            \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Precipitation (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_late\_overall}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}
-\centering
 \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 2-1.pdf}
-\caption{Overall Precipitation (late decade)}
-\end{figure}
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -615,6 +608,8 @@ Year & 1-year/24hr event \\
 \bottomrule
 \end{longtable}
 
+\newpage
+
 \textbf{Compare overall precipitation for each decade}
 
 \begin{Shaded}
@@ -631,6 +626,7 @@ Year & 1-year/24hr event \\
 
 \caption{Overall Precipitation by decade}\label{fig:overall grid}
 \end{figure}
+\newpage
 
 \textbf{Compare the 1-year/24 hour events for each decade}
 
