@@ -1,0 +1,756 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{article}
+\title{Precipitation Change in Beaufort, NC}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\url{https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_FinalProject.git}}
+\author{Karen Thornton, Lambert Ngenzi, Taro Katayama}
+\date{}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Precipitation Change in Beaufort, NC},
+  pdfauthor={Karen Thornton, Lambert Ngenzi, Taro Katayama},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents 
+\newpage
+\listoftables 
+\newpage
+\listoffigures 
+\newpage
+
+\hypertarget{rationale-and-research-questions}{%
+\section{Rationale and Research
+Questions}\label{rationale-and-research-questions}}
+
+\textbf{Question 1:} Has there been a significant increase in
+precipitation in Beaufort, NC from 1980 to 2016?
+
+\textbf{Question 2:} Has there been a significant increase in 1-year/24h
+precipitation event in Beaufort, NC from decade to decade (1997 to 2006
+and 2007 to 2016)?
+
+\textbf{Null Hypothesis 1:} There is no significant change in
+precipitation from 1980 to 2016.
+
+\textbf{Null Hypothesis 2:} There is no significant change in 1-year/24h
+precipitation events from decade to decade (1997 to 2006 and 2007 to
+2016).
+
+\newpage
+
+\hypertarget{dataset-information}{%
+\section{Dataset Information}\label{dataset-information}}
+
+Data was originally attained online from DAYMET for a Hydrology
+assignment during Fall Semester. Since then, DAYMET has been taken down,
+so the excel sheet from class was used. The data shows historical
+precipitation data from Beaufort, NC for the years 1980 to 2016. This
+dataset was chosen because it is the most complete and consistent
+precipitation dataset that we could find.
+
+``Significant 1-year/24hr Precipitation Events'' are considered 1
+year/24h events using the NOAA threshold of 3.66 inches for Beaufort,
+NC. This means that in 24h the probability of it raining 3.66 inches or
+more should only happen once a year. These events are considered large
+storm events.
+
+Get the working directory
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get your working directory}
+\FunctionTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load your datasets}
+\NormalTok{Beaufort\_RAW}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"./Data/Raw/Beaufort\_precip\_1980{-}present\_HUC\_030203010503\_dayMet\_split{-}dates{-}columns.csv"}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Load all packages
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load your packages}
+\CommentTok{\#install.packages(webshot)}
+\FunctionTok{library}\NormalTok{(webshot)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(lubridate)}
+\CommentTok{\#library(mapview)}
+\CommentTok{\#mapviewOptions(fgb = FALSE)}
+\CommentTok{\#library(sf)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(Kendall)}
+\FunctionTok{library}\NormalTok{(zoo)}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen =} \DecValTok{4}\NormalTok{) }\CommentTok{\# limit number of digits }
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\hypertarget{exploratory-analysis}{%
+\section{Exploratory Analysis}\label{exploratory-analysis}}
+
+\textbf{Initial Wrangling}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Structure of the dataset}
+\FunctionTok{str}\NormalTok{(Beaufort\_RAW)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    13514 obs. of  5 variables:
+##  $ Date                                         : Factor w/ 13514 levels "1980-01-01","1980-01-02",..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ Area.Weighted.Mean.Precipitation..mm.per.day.: num  0 0 0 12 9 0 0 7 9 0 ...
+##  $ year                                         : int  1980 1980 1980 1980 1980 1980 1980 1980 1980 1980 ...
+##  $ month                                        : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ day_of_month                                 : int  1 2 3 4 5 6 7 8 9 10 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Head of the dataset}
+\FunctionTok{head}\NormalTok{(Beaufort\_RAW)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Date Area.Weighted.Mean.Precipitation..mm.per.day. year month
+## 1 1980-01-01                                             0 1980     1
+## 2 1980-01-02                                             0 1980     1
+## 3 1980-01-03                                             0 1980     1
+## 4 1980-01-04                                            12 1980     1
+## 5 1980-01-05                                             9 1980     1
+## 6 1980-01-06                                             0 1980     1
+##   day_of_month
+## 1            1
+## 2            2
+## 3            3
+## 4            4
+## 5            5
+## 6            6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Dimension of dataset}
+\FunctionTok{dim}\NormalTok{(Beaufort\_RAW)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13514     5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Class of the dataset}
+\FunctionTok{class}\NormalTok{(Beaufort\_RAW)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "data.frame"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Column names of the dataset}
+\FunctionTok{colnames}\NormalTok{(Beaufort\_RAW)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Date"                                         
+## [2] "Area.Weighted.Mean.Precipitation..mm.per.day."
+## [3] "year"                                         
+## [4] "month"                                        
+## [5] "day_of_month"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#summarize the data}
+\FunctionTok{summary}\NormalTok{(Beaufort\_RAW)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Date       Area.Weighted.Mean.Precipitation..mm.per.day.
+##  1980-01-01:    1   Min.   :  0.00                               
+##  1980-01-02:    1   1st Qu.:  0.00                               
+##  1980-01-03:    1   Median :  0.00                               
+##  1980-01-04:    1   Mean   :  4.14                               
+##  1980-01-05:    1   3rd Qu.:  2.00                               
+##  1980-01-06:    1   Max.   :195.00                               
+##  (Other)   :13508   NA's   :9                                    
+##       year          month         day_of_month  
+##  Min.   :1980   Min.   : 1.000   Min.   : 1.00  
+##  1st Qu.:1989   1st Qu.: 4.000   1st Qu.: 8.00  
+##  Median :1998   Median : 7.000   Median :16.00  
+##  Mean   :1998   Mean   : 6.522   Mean   :15.73  
+##  3rd Qu.:2007   3rd Qu.:10.000   3rd Qu.:23.00  
+##  Max.   :2016   Max.   :12.000   Max.   :31.00  
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Rename columns to logical names}
+\FunctionTok{names}\NormalTok{(Beaufort\_RAW)[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Date"}
+\FunctionTok{names}\NormalTok{(Beaufort\_RAW)[}\DecValTok{2}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Mean\_Precip\_mm"}
+
+\CommentTok{\#Set Date as a Date}
+\NormalTok{Beaufort\_RAW}\SpecialCharTok{$}\NormalTok{Date}\OtherTok{\textless{}{-}}\FunctionTok{as.Date}\NormalTok{(Beaufort\_RAW}\SpecialCharTok{$}\NormalTok{Date, }\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{) }
+
+\CommentTok{\# Set your ggplot theme}
+\NormalTok{Theme }\OtherTok{\textless{}{-}} \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{9}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+        \AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{)}
+\FunctionTok{theme\_set}\NormalTok{(Theme)}
+
+\CommentTok{\#Save processed Raw to processed folder}
+\FunctionTok{write.csv}\NormalTok{(Beaufort\_RAW, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{, }
+          \AttributeTok{file =} \StringTok{"./Data/Processed/Beaufort\_Processed.csv"}\NormalTok{)}
+
+\CommentTok{\#Read in processed data}
+\NormalTok{Beaufort\_Processed}\OtherTok{\textless{}{-}}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"./Data/Processed/Beaufort\_Processed.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Create a Map of Beaufort for Visualization Aid}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a Beaufort point using long and lat }
+\CommentTok{\#mapviewOptions(fgb=FALSE)}
+
+\CommentTok{\#Beaufort\_pt \textless{}{-}  st\_point(c({-}76.6515, 34.7192))}
+
+\CommentTok{\#Convert the the two points into spatial data}
+\CommentTok{\#Beaufort\_Pol \textless{}{-} st\_sfc(Beaufort\_pt, crs = 4326)}
+
+\CommentTok{\#view the map}
+\CommentTok{\#mapview(Beaufort\_Pol)}
+
+\CommentTok{\#repeat the steps for the next layer}
+\CommentTok{\#Beaufort\_Town \textless{}{-} st\_as\_sf(Beaufort\_Pol)}
+
+\CommentTok{\#mapview(Beaufort\_Town, col.regions = "red")}
+
+\CommentTok{\# Load NC counties info }
+\CommentTok{\#NC\_data \textless{}{-} st\_read("./Data/Spatial/cb\_2018\_us\_county\_20m.shp") \%\textgreater{}\% }
+ \CommentTok{\# filter(STATEFP == 37)}
+
+\CommentTok{\# Visualize MC data}
+\CommentTok{\#mapview(NC\_data)}
+
+\CommentTok{\# Filter Beaufort county and map it }
+\CommentTok{\#Beaufort\_County \textless{}{-} NC\_data \%\textgreater{}\% }
+  \CommentTok{\#filter(NAME \%in\% "Carteret")}
+
+\CommentTok{\#mapview(Beaufort\_County, col.regions = "orange")}
+
+\CommentTok{\# Combine all map }
+\CommentTok{\#mapview(NC\_data, alpha.regions = 0.2) +}
+  \CommentTok{\#mapview(Beaufort\_County, col.regions = "orange") +}
+  \CommentTok{\#mapview(Beaufort\_Town, col.regions = "red")}
+
+\CommentTok{\#plot in ggplot to put in presentation }
+\CommentTok{\#ggplot()+}
+  \CommentTok{\#geom\_sf(data = NC\_data, aes(), alpha=0.2)+}
+  \CommentTok{\#geom\_sf(data = Beaufort\_County, fill= "orange", alpha = 0.7)+}
+  \CommentTok{\#geom\_sf(data= Beaufort\_Town, col = "red")+}
+  \CommentTok{\#ggtitle("Beaufort, NC")}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{wrangle-data-for-analysis}{%
+\section{Wrangle Data for Analysis}\label{wrangle-data-for-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. }
+\NormalTok{Beaufort\_Clean}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_Processed}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year,month)}\SpecialCharTok{\%\textgreater{}\%}
+   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanmonthlyprecip=} \FunctionTok{mean}\NormalTok{(Mean\_Precip\_mm),}
+             \AttributeTok{sumMonthlyPrecip=} \FunctionTok{sum}\NormalTok{(Mean\_Precip\_mm))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Date=} \FunctionTok{my}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(month,}\StringTok{"{-}"}\NormalTok{, year)))}
+
+\CommentTok{\#Plot total monthly precipitation data to see rough trend (Clean dataset)}
+\FunctionTok{ggplot}\NormalTok{(Beaufort\_Clean, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date, }\AttributeTok{y=}\NormalTok{sumMonthlyPrecip))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=} \StringTok{"Sum Monthly Precip. (mm)"}\NormalTok{, }\AttributeTok{caption =} \StringTok{"Total Monthly Precipitation"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/clean-1.pdf}
+
+\textbf{Create a dataset for the early decade (1997-2006)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#This dataset has a 10 year time frame with precipitation in inches (1997{-}01{-}01 to 2006{-}12{-}31) and significant 1{-}year/24hr precipitation events in magnitude and number of significant precipitation events}
+
+\NormalTok{Beaufort\_early}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_Processed}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{PrecipInches=}\NormalTok{ Mean\_Precip\_mm}\SpecialCharTok{*}\FloatTok{0.0394}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Date }\SpecialCharTok{\textgreater{}}\NormalTok{(}\StringTok{"1996{-}12{-}31"}\NormalTok{), Date }\SpecialCharTok{\textless{}}\NormalTok{ (}\StringTok{"2007{-}01{-}01"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{,PrecipInches,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{NumSigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Date , year, month, }
+\NormalTok{         day\_of\_month, PrecipInches, sigPrecip, NumSigPrecip)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{()}
+  
+\CommentTok{\#Create a Beaufort early dataset, where non{-}significant 1{-}year/24h precipitation events were classified as NA.}
+\NormalTok{Beaufort\_earlyNo0Precip}\OtherTok{\textless{}{-}}\NormalTok{Beaufort\_Processed}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{PrecipInches=}\NormalTok{Mean\_Precip\_mm}\SpecialCharTok{*}\FloatTok{0.0394}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Date }\SpecialCharTok{\textgreater{}}\NormalTok{(}\StringTok{"1996{-}12{-}31"}\NormalTok{), Date }\SpecialCharTok{\textless{}}\NormalTok{ (}\StringTok{"2007{-}01{-}01"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{,PrecipInches,}\ConstantTok{NA}\NormalTok{),}
+         \AttributeTok{NumSigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Date , year, month, }
+\NormalTok{         day\_of\_month, PrecipInches, sigPrecip, NumSigPrecip)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\#Summary of number of 1{-}year/24hr events per year}
+\NormalTok{Beaufort\_early\_summary}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_early}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{SigPrecipEvents=} \FunctionTok{sum}\NormalTok{(NumSigPrecip))}
+
+\CommentTok{\#Create a table of number of 1{-}year/24hr events per year.}
+\NormalTok{EarlyTable}\OtherTok{\textless{}{-}} \FunctionTok{kable}\NormalTok{(Beaufort\_early\_summary, }\AttributeTok{caption =} \StringTok{"1{-}year/24hr Events Over Year"}\NormalTok{, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Year"}\NormalTok{, }\StringTok{"1{-}year/24hr event"}\NormalTok{))}
+\NormalTok{EarlyTable}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\caption{1-year/24hr Events Over Year}\tabularnewline
+\toprule
+Year & 1-year/24hr event \\
+\midrule
+\endfirsthead
+\toprule
+Year & 1-year/24hr event \\
+\midrule
+\endhead
+1997 & 0 \\
+1998 & 1 \\
+1999 & 1 \\
+2000 & 0 \\
+2001 & 0 \\
+2002 & 0 \\
+2003 & 0 \\
+2004 & 0 \\
+2005 & 1 \\
+2006 & 1 \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a figure with number and magnitude of significant events per year.}
+\NormalTok{Plot\_early\_sig }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_earlyNo0Precip, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{, }\AttributeTok{caption =} \StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Early Signficant Events"}\NormalTok{)}
+\NormalTok{Plot\_early\_sig}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a figure showing the overall precipitation for the early decade}
+\NormalTok{Plot\_early\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_early, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Precipitation (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
+\NormalTok{Plot\_early\_overall}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early-2.pdf}
+
+\textbf{Create a dataset for the late decade (2007-2016)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#This dataset has a 10 year time frame, precipitation in inches (2007{-}01{-}01 to 2016{-}12{-}30) and significant 1{-}year/24hr precipitation events in magnitude and number of significant precipitation events}
+
+\NormalTok{Beaufort\_Late}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_Processed}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{PrecipInches=}\NormalTok{ Mean\_Precip\_mm}\SpecialCharTok{*}\FloatTok{0.0394}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Date }\SpecialCharTok{\textgreater{}} \StringTok{"2006{-}12{-}31"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{,PrecipInches,}\DecValTok{0}\NormalTok{),}
+         \AttributeTok{NumSigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Date, year, month, }
+\NormalTok{         day\_of\_month, PrecipInches, sigPrecip, NumSigPrecip)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\#Create a Beaufort late dataset, where non significant 1{-}year/24hr precipitation events were classified as NA.}
+\NormalTok{Beaufort\_LateNo0Precip}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_Processed}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{PrecipInches=}\NormalTok{ Mean\_Precip\_mm}\SpecialCharTok{*}\FloatTok{0.0394}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Date }\SpecialCharTok{\textgreater{}} \StringTok{"2006{-}12{-}31"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{,PrecipInches,}\ConstantTok{NA}\NormalTok{),}
+         \AttributeTok{NumSigPrecip=} \FunctionTok{ifelse}\NormalTok{(PrecipInches}\SpecialCharTok{\textgreater{}}\FloatTok{3.66}\NormalTok{, }\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Date, year, month, }
+\NormalTok{         day\_of\_month, PrecipInches, sigPrecip, NumSigPrecip)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\#Summary of number of significant 1{-}year.24hr events per year (Late)}
+\NormalTok{Beaufort\_late\_summary}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_Late}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{SigPrecipEvents=} \FunctionTok{sum}\NormalTok{(NumSigPrecip))}
+
+\CommentTok{\#Create a figure with number and magnitude of significant 1{-}year/24hr events per year.}
+\NormalTok{Plot\_late\_sig }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_LateNo0Precip, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24h storm events (in) "}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Late Signficant Events"}\NormalTok{)}
+\NormalTok{Plot\_late\_sig}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a figure showing the overall precipitation for the late decade}
+\NormalTok{Plot\_late\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_Late, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Precipitation (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
+\NormalTok{Plot\_late\_overall}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a table of number of significant 1{-}year/24hr events per year.}
+\NormalTok{LateTable}\OtherTok{\textless{}{-}} \FunctionTok{kable}\NormalTok{(Beaufort\_late\_summary, }\AttributeTok{caption =} \StringTok{"Significant Events Over Year"}\NormalTok{, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Year"}\NormalTok{, }\StringTok{"1{-}year/24hr event"}\NormalTok{))}
+\NormalTok{LateTable}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rr@{}}
+\caption{Significant Events Over Year}\tabularnewline
+\toprule
+Year & 1-year/24hr event \\
+\midrule
+\endfirsthead
+\toprule
+Year & 1-year/24hr event \\
+\midrule
+\endhead
+2007 & 2 \\
+2008 & 1 \\
+2009 & 2 \\
+2010 & 2 \\
+2011 & 2 \\
+2012 & 0 \\
+2013 & 1 \\
+2014 & 2 \\
+2015 & 3 \\
+2016 & 2 \\
+\bottomrule
+\end{longtable}
+
+\textbf{Compare overall precipitation for each decade}
+
+\begin{center}\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+\textbf{Compare the 1-year/24 hour events for each decade}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{(Plot\_early\_sig, Plot\_late\_sig, }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/combined one year storms-1.pdf}
+
+\newpage
+
+\hypertarget{analysis}{%
+\section{Analysis}\label{analysis}}
+
+Perform t-test and seasonal Mann-Kendall for overall dataset
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(Beaufort\_Processed}\SpecialCharTok{$}\NormalTok{Mean\_Precip\_mm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  Beaufort_Processed$Mean_Precip_mm
+## t = 43.492, df = 13504, p-value < 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  3.953508 4.326684
+## sample estimates:
+## mean of x 
+##  4.140096
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#significant (p{-}value=2.2e{-}16) \textless{}{-} This means that there is a significant change in precipitation over the years 1980 to 2016}
+
+\CommentTok{\#Using Seasonal Mann{-}Kendall to look at trend excluding seasonality. This will be a better indicator of significant change than the t{-}test. That being said, both tests were run.}
+\NormalTok{Beaufort\_RAW\_2}\OtherTok{\textless{}{-}}\NormalTok{Beaufort\_Processed}
+
+\CommentTok{\#Used linear interpolation to fill missing data for precipitation data.}
+\NormalTok{Beaufort\_RAW\_2}\SpecialCharTok{$}\NormalTok{Mean\_Precip\_mm}\OtherTok{\textless{}{-}}
+  \FunctionTok{na.approx}\NormalTok{(Beaufort\_RAW\_2}\SpecialCharTok{$}\NormalTok{Mean\_Precip\_mm)}
+
+\CommentTok{\#Created a time series analysis of the precipitation data at Beaufort.}
+\NormalTok{firstday}\OtherTok{\textless{}{-}} \FunctionTok{day}\NormalTok{(}\FunctionTok{first}\NormalTok{(Beaufort\_RAW\_2}\SpecialCharTok{$}\NormalTok{Date))}
+\NormalTok{firstmonth}\OtherTok{\textless{}{-}} \FunctionTok{month}\NormalTok{(}\FunctionTok{first}\NormalTok{(Beaufort\_RAW\_2}\SpecialCharTok{$}\NormalTok{Date))}
+\NormalTok{firstyear}\OtherTok{\textless{}{-}} \FunctionTok{year}\NormalTok{(}\FunctionTok{first}\NormalTok{(Beaufort\_RAW\_2}\SpecialCharTok{$}\NormalTok{Date))}
+
+
+\NormalTok{Beaufort\_TS}\OtherTok{\textless{}{-}} \FunctionTok{ts}\NormalTok{(Beaufort\_RAW\_2}\SpecialCharTok{$}\NormalTok{Mean\_Precip\_mm, }
+                 \AttributeTok{start =} \FunctionTok{c}\NormalTok{(firstyear, firstmonth, firstday),}
+                 \AttributeTok{frequency =} \DecValTok{365}\NormalTok{)}
+
+\CommentTok{\#Decomposed the time series to see components.}
+\NormalTok{Beaufort\_decompose}\OtherTok{\textless{}{-}} \FunctionTok{stl}\NormalTok{(Beaufort\_TS, }\AttributeTok{s.window =} \StringTok{"periodic"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(Beaufort\_decompose)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/t-test Overall and Seasonal Mann-Kendall Ovearall-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Ran a seasonal Mann Kendall to see if there is a change in precipitation over the time of the data frame. Used seasonal Mann{-}Kendall to exclude seasonality of precipitation. }
+\NormalTok{Beaufort.trend}\OtherTok{\textless{}{-}}\NormalTok{Kendall}\SpecialCharTok{::}\FunctionTok{SeasonalMannKendall}\NormalTok{(Beaufort\_TS)}
+\NormalTok{Beaufort.trend}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tau = 0.0189, 2-sided pvalue =0.0056612
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Significant! (p{-}value = 0.0056612) \textless{}{-} This means that when you exclude seasonality there is still a significant change in precipitation from 1980 to 2016}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{T-test was run to compare the two decades}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Here we are looking to see if there is a change in precipitation amount comparing two decades (1999{-}2006) \& (2007{-}2016)}
+\FunctionTok{t.test}\NormalTok{(Beaufort\_early}\SpecialCharTok{$}\NormalTok{PrecipInches, Beaufort\_Late}\SpecialCharTok{$}\NormalTok{PrecipInches)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  Beaufort_early$PrecipInches and Beaufort_Late$PrecipInches
+## t = -0.64906, df = 7133.8, p-value = 0.5163
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.02812072  0.01413102
+## sample estimates:
+## mean of x mean of y 
+## 0.1627598 0.1697546
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#not significant (p{-}value=0.5163)\textless{}{-} meaning precipitation amount not significantly different over the two decades}
+
+\CommentTok{\#Here we compared the significant 1{-}year/24hr precipitation events for the two decades (1999{-}2006) \& (2007{-}2016).}
+\FunctionTok{t.test}\NormalTok{(Beaufort\_early}\SpecialCharTok{$}\NormalTok{sigPrecip, Beaufort\_Late}\SpecialCharTok{$}\NormalTok{sigPrecip)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  Beaufort_early$sigPrecip and Beaufort_Late$sigPrecip
+## t = -2.7068, df = 5451.7, p-value = 0.006815
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.028681849 -0.004586864
+## sample estimates:
+##   mean of x   mean of y 
+## 0.005537589 0.022171945
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#significant! (p{-}value=0.006815) \textless{}{-} There are more statistically significant 1 year precipitation events in later decade. }
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\hypertarget{summary-and-conclusions}{%
+\section{Summary and Conclusions}\label{summary-and-conclusions}}
+
+After careful analysis, it has been concluded that there is a
+significant increase in precipitation from 1980 to 2016 in Beaufort, NC.
+When comparing decade 1 (1997 to 2006) to decade 2 (2007 to 2016) there
+was no significant increase in precipitation.That being said, when
+looking at significant 1-year/24hr storm events with a threshold of 3.66
+inches there was a significant increase from decade 1 to decade 2.
+
+While there isn't enough information to draw conclusions based on
+precipitation alone, our prediction is climate change as the driver
+behind the increase in 1-year/24hr storm events between decades. This
+project shows the importance of tracking large storm events in future
+climate change studies.
+
+It would also be interesting to use a longer period of data (more than
+30 years) to see if there is any new or different trends that could not
+be captured with our data.
+
+\newpage
+
+\hypertarget{resources}{%
+\section{Resources}\label{resources}}
+
+\textbf{NOAA Website}
+\url{https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_map_cont.html?bkmrk=nc}
+
+\end{document}
