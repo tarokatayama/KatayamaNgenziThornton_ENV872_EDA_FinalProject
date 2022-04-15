@@ -1,7 +1,6 @@
 ---
 output: 
   pdf_document:
-    keep_md: yes
     keep_tex: yes
     fig_caption: yes
     number_sections: yes
@@ -11,6 +10,8 @@ subtitle: https://github.com/tarokatayama/KatayamaNgenziThornton_ENV872_EDA_Fina
 author: "Karen Thornton, Lambert Ngenzi, Taro Katayama"
 fontsize: 12pt
 mainfont: Times New Roman
+editor_options:
+  chunk_output_type: console
 ---
 
 \newpage
@@ -161,7 +162,7 @@ Beaufort_Processed<-read.csv("./Data/Processed/Beaufort_Processed.csv")
 ```
 
 # Wrangle Data for Analysis
-```{r clean, message=FALSE, warning=FALSE}
+```{r clean, message=FALSE, warning=FALSE, fig.cap="Total Monthly Precipitation"}
 #Create a monthly mean precipitation and total monthly precipitation dataset for Beaufort. This dataset is only for visualization purposes. 
 Beaufort_Clean<- Beaufort_Processed%>%
   group_by(year,month)%>%
@@ -205,20 +206,32 @@ Beaufort_early_summary<- Beaufort_early%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
 #Create a table of number of 1-year/24hr events per year.
-EarlyTable<- kable(Beaufort_early_summary, caption = "1-year/24hr Events Over Year", col.names = c("Year", "1-year/24hr event"))
+EarlyTable<- kable(Beaufort_early_summary, 
+                   caption = "1-year/24hr Events Over Year", 
+                   col.names = c("Year", "1-year/24hr event"))
 EarlyTable
+```
+\newpage
 
+```{r early plot 1, fig.align='center', fig.width= 6, fig.cap="Sig events (early decade)"}
 #Create a figure with number and magnitude of significant events per year.
-Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
+Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, 
+                         aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
-  labs(y="1-year/24hr storm events (in)", x= "Date", caption = "1-year/24hr storm events (in)") +
-  ggtitle("Early Signficant Events")
+   theme(axis.text.x=element_text(angle=60, hjust=1))+
+  labs(y="1-year/24hr storm events (in)", x= "Date")
 Plot_early_sig
-
+```
+\newpage
+```{r early plot 2, fig.cap="Overall Precipitation (early decade)"}
 #Create a figure showing the overall precipitation for the early decade
-Plot_early_overall <- ggplot(Beaufort_early, aes(x=Date , y=PrecipInches))+
+Beaufort_early$Date<- as.Date(Beaufort_early$Date, "%Y-%m-%d")
+
+Plot_early_overall <- ggplot(Beaufort_early, 
+                             aes(x=Date , y=PrecipInches))+
   geom_point()+
+   scale_x_date(date_labels = ("%m-%Y"))+
   labs(y="Precipitation (in)", x= "Date")
 Plot_early_overall
 ```
@@ -250,34 +263,52 @@ Beaufort_LateNo0Precip<- Beaufort_Processed%>%
 Beaufort_late_summary<- Beaufort_Late%>%
   group_by(year)%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
-
+```
+\newpage
+```{r late plot 1, fig.align='center', fig.cap= "Sig events (late decade)", fig.width= 6, echo=TRUE}
 #Create a figure with number and magnitude of significant 1-year/24hr events per year.
-Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
+Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, 
+                        aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
-  labs(y="1-year/24h storm events (in) ", x= "Date") +
-  ggtitle("Late Signficant Events")
+  theme(axis.text.x=element_text(angle=60, hjust=1))+
+  labs(y="1-year/24h storm events (in) ", x= "Date")
 Plot_late_sig
+```
+\newpage
 
+```{r late plot 2, fig.align='center', fig.width=6, fig.cap="Overall Precipitation (late decade)"}
 #Create a figure showing the overall precipitation for the late decade
-Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
+Beaufort_Late$Date<- as.Date(Beaufort_Late$Date, "%Y-%m-%d")
+
+Plot_late_overall <- ggplot(Beaufort_Late, 
+                            aes(x=Date , y=PrecipInches))+
   geom_point()+
+  scale_x_date(date_labels = ("%m-%Y"))+
   labs(y="Precipitation (in)", x= "Date")
 Plot_late_overall
+```
+\newpage
 
+```{r late table}
 #Create a table of number of significant 1-year/24hr events per year.
-LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year", col.names = c("Year", "1-year/24hr event"))
+LateTable<- kable(Beaufort_late_summary, 
+                  caption = "Significant Events Over Year", 
+                  col.names = c("Year", "1-year/24hr event"))
 LateTable
 ```
+\newpage
 
 **Compare overall precipitation for each decade**
-```{r echo=FALSE, fig.align= "center"}
+```{r overall grid, fig.align= "center", fig.cap="Overall Precipitation by decade"}
 grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
-```
 
+```
+\newpage
 **Compare the 1-year/24 hour events for each decade**
-```{r combined one year storms}
+```{r combined one year storms, fig.align="center", fig.cap="1 year 24 hr storm event decade comparison"}
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
+
 ```
 
 \newpage 
@@ -285,7 +316,7 @@ grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 # Analysis
 
 Perform t-test and seasonal Mann-Kendall for overall dataset
-```{r t-test Overall and Seasonal Mann-Kendall Ovearall}
+```{r t-test Overall and Seasonal Mann-Kendall Ovearall, fig.cap="Decomposed time series"}
 
 t.test(Beaufort_Processed$Mean_Precip_mm)
 #significant (p-value=2.2e-16) <- This means that there is a significant change in precipitation over the years 1980 to 2016

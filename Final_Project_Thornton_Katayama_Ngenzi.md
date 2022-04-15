@@ -251,7 +251,11 @@ ggplot(Beaufort_Clean, aes(x=Date, y=sumMonthlyPrecip))+
   geom_smooth(method = lm) 
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/clean-1.pdf)<!-- --> 
+=======
+![Total Monthly Precipitation](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/clean-1.pdf) 
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 
 **Create a dataset for the early decade (1997-2006)**
 
@@ -283,7 +287,13 @@ Beaufort_early_summary<- Beaufort_early%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
 
 #Create a table of number of 1-year/24hr events per year.
+<<<<<<< HEAD
 EarlyTable<- kable(Beaufort_early_summary, caption = "1-year/24hr Events Over Year", col.names = c("Year", "1-year/24hr event"))
+=======
+EarlyTable<- kable(Beaufort_early_summary, 
+                   caption = "1-year/24hr Events Over Year", 
+                   col.names = c("Year", "1-year/24hr event"))
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 EarlyTable
 ```
 
@@ -304,27 +314,53 @@ Table: 1-year/24hr Events Over Year
 | 2005|                 1|
 | 2006|                 1|
 
+<<<<<<< HEAD
 ```r
 #Create a figure with number and magnitude of significant events per year.
 Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, aes(x=Date , y=sigPrecip))+
   geom_point()+
   ylim(c(0,8))+
   labs(y="1-year/24hr storm events (in)", x= "Date", caption = "1-year/24hr storm events (in)") +
+=======
+
+```r
+#Create a figure with number and magnitude of significant events per year.
+Plot_early_sig <- ggplot(Beaufort_earlyNo0Precip, 
+                         aes(x=Date , y=sigPrecip))+
+  geom_point()+
+  ylim(c(0,8))+
+  labs(y="1-year/24hr storm events (in)", x= "Date", 
+       caption = "1-year/24hr storm events (in)") +
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
   ggtitle("Early Signficant Events")
 Plot_early_sig
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early-1.pdf)<!-- --> 
 
 ```r
 #Create a figure showing the overall precipitation for the early decade
 Plot_early_overall <- ggplot(Beaufort_early, aes(x=Date , y=PrecipInches))+
+=======
+![1 year 24 hr storm events (early decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 1-1.pdf) 
+
+
+```r
+#Create a figure showing the overall precipitation for the early decade
+Plot_early_overall <- ggplot(Beaufort_early, 
+                             aes(x=Date , y=PrecipInches))+
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
   geom_point()+
   labs(y="Precipitation (in)", x= "Date")
 Plot_early_overall
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early-2.pdf)<!-- --> 
+=======
+![Overall Precipitation (early decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 2-1.pdf) 
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 
 **Create a dataset for the late decade (2007-2016)**
 
@@ -354,9 +390,19 @@ Beaufort_LateNo0Precip<- Beaufort_Processed%>%
 Beaufort_late_summary<- Beaufort_Late%>%
   group_by(year)%>%
   summarise(SigPrecipEvents= sum(NumSigPrecip))
+<<<<<<< HEAD
 
 #Create a figure with number and magnitude of significant 1-year/24hr events per year.
 Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
+=======
+```
+
+
+```r
+#Create a figure with number and magnitude of significant 1-year/24hr events per year.
+Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, 
+                        aes(x=Date , y=sigPrecip))+
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
   geom_point()+
   ylim(c(0,8))+
   labs(y="1-year/24h storm events (in) ", x= "Date") +
@@ -364,7 +410,12 @@ Plot_late_sig <- ggplot(Beaufort_LateNo0Precip, aes(x=Date , y=sigPrecip))+
 Plot_late_sig
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late-1.pdf)<!-- --> 
+=======
+![1 year 24 hr storm events (late decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 1-1.pdf) 
+
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 
 ```r
 #Create a figure showing the overall precipitation for the late decade
@@ -374,11 +425,21 @@ Plot_late_overall <- ggplot(Beaufort_Late, aes(x=Date , y=PrecipInches))+
 Plot_late_overall
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late-2.pdf)<!-- --> 
 
 ```r
 #Create a table of number of significant 1-year/24hr events per year.
 LateTable<- kable(Beaufort_late_summary, caption = "Significant Events Over Year", col.names = c("Year", "1-year/24hr event"))
+=======
+![Overall Precipitation (late decade)](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 2-1.pdf) 
+
+```r
+#Create a table of number of significant 1-year/24hr events per year.
+LateTable<- kable(Beaufort_late_summary, 
+                  caption = "Significant Events Over Year", 
+                  col.names = c("Year", "1-year/24hr event"))
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 LateTable
 ```
 
@@ -401,7 +462,22 @@ Table: Significant Events Over Year
 
 **Compare overall precipitation for each decade**
 
+<<<<<<< HEAD
 \begin{center}\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/unnamed-chunk-2-1} \end{center}
+=======
+```r
+grid.arrange(Plot_early_overall, Plot_late_overall, ncol=2)
+```
+
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/overall grid-1} 
+
+}
+
+\caption{Overall Precipitation by decade}\label{fig:overall grid}
+\end{figure}
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 
 **Compare the 1-year/24 hour events for each decade**
 
@@ -409,7 +485,18 @@ Table: Significant Events Over Year
 grid.arrange(Plot_early_sig, Plot_late_sig, ncol=2)
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/combined one year storms-1.pdf)<!-- --> 
+=======
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/combined one year storms-1} 
+
+}
+
+\caption{1 year 24 hr storm event decade comparison}\label{fig:combined one year storms}
+\end{figure}
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 
 \newpage 
 
@@ -460,7 +547,11 @@ Beaufort_decompose<- stl(Beaufort_TS, s.window = "periodic")
 plot(Beaufort_decompose)
 ```
 
+<<<<<<< HEAD
 ![](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/t-test Overall and Seasonal Mann-Kendall Ovearall-1.pdf)<!-- --> 
+=======
+![Decomposed time series](Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/t-test Overall and Seasonal Mann-Kendall Ovearall-1.pdf) 
+>>>>>>> bf72f4566a1ce31fd023e451ce45a702f8f47c20
 
 ```r
 #Ran a seasonal Mann Kendall to see if there is a change in precipitation over the time of the data frame. Used seasonal Mann-Kendall to exclude seasonality of precipitation. 

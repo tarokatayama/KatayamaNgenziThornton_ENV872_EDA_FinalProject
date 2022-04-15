@@ -411,7 +411,11 @@ Load all packages
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/clean-1.pdf}
+\caption{Total Monthly Precipitation}
+\end{figure}
 
 \textbf{Create a dataset for the early decade (1997-2006)}
 
@@ -444,7 +448,9 @@ Load all packages
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{SigPrecipEvents=} \FunctionTok{sum}\NormalTok{(NumSigPrecip))}
 
 \CommentTok{\#Create a table of number of 1{-}year/24hr events per year.}
-\NormalTok{EarlyTable}\OtherTok{\textless{}{-}} \FunctionTok{kable}\NormalTok{(Beaufort\_early\_summary, }\AttributeTok{caption =} \StringTok{"1{-}year/24hr Events Over Year"}\NormalTok{, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Year"}\NormalTok{, }\StringTok{"1{-}year/24hr event"}\NormalTok{))}
+\NormalTok{EarlyTable}\OtherTok{\textless{}{-}} \FunctionTok{kable}\NormalTok{(Beaufort\_early\_summary, }
+                   \AttributeTok{caption =} \StringTok{"1{-}year/24hr Events Over Year"}\NormalTok{, }
+                   \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Year"}\NormalTok{, }\StringTok{"1{-}year/24hr event"}\NormalTok{))}
 \NormalTok{EarlyTable}
 \end{Highlighting}
 \end{Shaded}
@@ -472,31 +478,50 @@ Year & 1-year/24hr event \\
 \bottomrule
 \end{longtable}
 
+\newpage
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a figure with number and magnitude of significant events per year.}
-\NormalTok{Plot\_early\_sig }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_earlyNo0Precip, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
+\NormalTok{Plot\_early\_sig }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_earlyNo0Precip, }
+                         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{, }\AttributeTok{caption =} \StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Early Signficant Events"}\NormalTok{)}
+   \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle=}\DecValTok{60}\NormalTok{, }\AttributeTok{hjust=}\DecValTok{1}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24hr storm events (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_early\_sig}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early-1.pdf}
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 1-1} 
+
+}
+
+\caption{Sig events (early decade)}\label{fig:early plot 1}
+\end{figure}
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a figure showing the overall precipitation for the early decade}
-\NormalTok{Plot\_early\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_early, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
+\NormalTok{Beaufort\_early}\SpecialCharTok{$}\NormalTok{Date}\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(Beaufort\_early}\SpecialCharTok{$}\NormalTok{Date, }\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{Plot\_early\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_early, }
+                             \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+   \FunctionTok{scale\_x\_date}\NormalTok{(}\AttributeTok{date\_labels =}\NormalTok{ (}\StringTok{"\%m{-}\%Y"}\NormalTok{))}\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Precipitation (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_early\_overall}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early-2.pdf}
+\begin{figure}
+\centering
+\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/early plot 2-1.pdf}
+\caption{Overall Precipitation (early decade)}
+\end{figure}
 
 \textbf{Create a dataset for the late decade (2007-2016)}
 
@@ -527,35 +552,64 @@ Year & 1-year/24hr event \\
 \NormalTok{Beaufort\_late\_summary}\OtherTok{\textless{}{-}}\NormalTok{ Beaufort\_Late}\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(year)}\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{SigPrecipEvents=} \FunctionTok{sum}\NormalTok{(NumSigPrecip))}
+\end{Highlighting}
+\end{Shaded}
 
+\newpage
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\#Create a figure with number and magnitude of significant 1{-}year/24hr events per year.}
-\NormalTok{Plot\_late\_sig }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_LateNo0Precip, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
+\NormalTok{Plot\_late\_sig }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_LateNo0Precip, }
+                        \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{sigPrecip))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24h storm events (in) "}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Late Signficant Events"}\NormalTok{)}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle=}\DecValTok{60}\NormalTok{, }\AttributeTok{hjust=}\DecValTok{1}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"1{-}year/24h storm events (in) "}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_late\_sig}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late-1.pdf}
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 1-1} 
+
+}
+
+\caption{Sig events (late decade)}\label{fig:late plot 1}
+\end{figure}
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a figure showing the overall precipitation for the late decade}
-\NormalTok{Plot\_late\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_Late, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
+\NormalTok{Beaufort\_Late}\SpecialCharTok{$}\NormalTok{Date}\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(Beaufort\_Late}\SpecialCharTok{$}\NormalTok{Date, }\StringTok{"\%Y{-}\%m{-}\%d"}\NormalTok{)}
+
+\NormalTok{Plot\_late\_overall }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(Beaufort\_Late, }
+                            \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Date , }\AttributeTok{y=}\NormalTok{PrecipInches))}\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_date}\NormalTok{(}\AttributeTok{date\_labels =}\NormalTok{ (}\StringTok{"\%m{-}\%Y"}\NormalTok{))}\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{y=}\StringTok{"Precipitation (in)"}\NormalTok{, }\AttributeTok{x=} \StringTok{"Date"}\NormalTok{)}
 \NormalTok{Plot\_late\_overall}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late-2.pdf}
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/late plot 2-1} 
+
+}
+
+\caption{Overall Precipitation (late decade)}\label{fig:late plot 2}
+\end{figure}
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a table of number of significant 1{-}year/24hr events per year.}
-\NormalTok{LateTable}\OtherTok{\textless{}{-}} \FunctionTok{kable}\NormalTok{(Beaufort\_late\_summary, }\AttributeTok{caption =} \StringTok{"Significant Events Over Year"}\NormalTok{, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Year"}\NormalTok{, }\StringTok{"1{-}year/24hr event"}\NormalTok{))}
+\NormalTok{LateTable}\OtherTok{\textless{}{-}} \FunctionTok{kable}\NormalTok{(Beaufort\_late\_summary, }
+                  \AttributeTok{caption =} \StringTok{"Significant Events Over Year"}\NormalTok{, }
+                  \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Year"}\NormalTok{, }\StringTok{"1{-}year/24hr event"}\NormalTok{))}
 \NormalTok{LateTable}
 \end{Highlighting}
 \end{Shaded}
@@ -583,9 +637,25 @@ Year & 1-year/24hr event \\
 \bottomrule
 \end{longtable}
 
+\newpage
+
 \textbf{Compare overall precipitation for each decade}
 
-\begin{center}\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{(Plot\_early\_overall, Plot\_late\_overall, }\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/overall grid-1} 
+
+}
+
+\caption{Overall Precipitation by decade}\label{fig:overall grid}
+\end{figure}
+\newpage
 
 \textbf{Compare the 1-year/24 hour events for each decade}
 
@@ -595,7 +665,14 @@ Year & 1-year/24hr event \\
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/combined one year storms-1.pdf}
+\begin{figure}
+
+{\centering \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/combined one year storms-1} 
+
+}
+
+\caption{1 year 24 hr storm event decade comparison}\label{fig:combined one year storms}
+\end{figure}
 
 \newpage
 
@@ -651,7 +728,11 @@ Perform t-test and seasonal Mann-Kendall for overall dataset
 \end{Highlighting}
 \end{Shaded}
 
+\begin{figure}
+\centering
 \includegraphics{Final_Project_Thornton_Katayama_Ngenzi_files/figure-latex/t-test Overall and Seasonal Mann-Kendall Ovearall-1.pdf}
+\caption{Decomposed time series}
+\end{figure}
 
 \begin{Shaded}
 \begin{Highlighting}[]
